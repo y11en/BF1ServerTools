@@ -39,7 +39,7 @@
                 <TextBlock
                     Margin="5"
                     VerticalAlignment="Center"
-                    FontSize="20"
+                    FontSize="18"
                     FontWeight="Bold"
                     Text="战地1服务器管理工具" />
             </StackPanel>

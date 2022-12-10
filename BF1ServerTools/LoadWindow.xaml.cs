@@ -98,7 +98,7 @@ public partial class LoadWindow
                 LoadModel.LoadState = "正在准备最后工作...";
 
                 Chat.AllocateMemory();
-                LoggerHelper.Info($"中文聊天指针分配成功 0x{Chat.AllocateMemoryAddress:x}");
+                LoggerHelper.Info($"中文聊天指针分配成功 0x{Chat.AllocateMemAddress:x}");
 
                 ChineseConverter.ToTraditional("免费，跨平台，开源！");
                 LoggerHelper.Info("简繁翻译库初始化成功");

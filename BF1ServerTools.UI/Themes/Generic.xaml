@@ -5,6 +5,9 @@
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Image.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Button.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/TextBlock.xaml" />
+
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/RadioButtonIcon.xaml" />
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/LoadingSpinner.xaml" />
 

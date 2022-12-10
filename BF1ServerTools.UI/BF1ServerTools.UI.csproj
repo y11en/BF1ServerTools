@@ -17,7 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Fonts\" />
+    <None Remove="Fonts\IconFont.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\IconFont.ttf" />
   </ItemGroup>
 
 </Project>

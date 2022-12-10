@@ -25,7 +25,7 @@ public static class Chat
     /// <summary>
     /// 申请的内存地址
     /// </summary>
-    public static IntPtr AllocateMemoryAddress { get; private set; } = IntPtr.Zero;
+    public static IntPtr AllocateMemAddress { get; private set; } = IntPtr.Zero;
 
     /// <summary>
     /// 用于线程加锁
@@ -189,7 +189,7 @@ public static class Chat
                 Memory.SuspendBF1Process();
 
                 var length = GetStrLength(message);
-                Memory.WriteString(AllocateMemoryAddress.ToInt64(), message);
+                Memory.WriteString(AllocateMemAddress.ToInt64(), message);
 
                 var startPtr = ChatMessagePointer() + OFFSET_CHAT_MESSAGE_START;
                 var endPtr = ChatMessagePointer() + OFFSET_CHAT_MESSAGE_END;
@@ -197,8 +197,8 @@ public static class Chat
                 var oldStartPtr = Memory.Read<long>(startPtr);
                 var oldEndPtr = Memory.Read<long>(endPtr);
 
-                Memory.Write(startPtr, AllocateMemoryAddress.ToInt64());
-                Memory.Write(endPtr, AllocateMemoryAddress.ToInt64() + length);
+                Memory.Write(startPtr, AllocateMemAddress.ToInt64());
+                Memory.Write(endPtr, AllocateMemAddress.ToInt64() + length);
 
                 // 恢复战地1进程
                 Memory.ResumeBF1Process();
@@ -297,10 +297,10 @@ public static class Chat
     /// <returns></returns>
     public static bool AllocateMemory()
     {
-        if (AllocateMemoryAddress == IntPtr.Zero)
-            AllocateMemoryAddress = Win32.VirtualAllocEx(Memory.Bf1ProHandle, IntPtr.Zero, (IntPtr)0x300, AllocationType.Commit, MemoryProtection.ReadWrite);
+        if (AllocateMemAddress == IntPtr.Zero)
+            AllocateMemAddress = Win32.VirtualAllocEx(Memory.Bf1ProHandle, IntPtr.Zero, (IntPtr)0x300, AllocationType.Commit, MemoryProtection.ReadWrite);
 
-        return AllocateMemoryAddress != IntPtr.Zero;
+        return AllocateMemAddress != IntPtr.Zero;
     }
 
     /// <summary>
@@ -308,7 +308,7 @@ public static class Chat
     /// </summary>
     public static void FreeMemory()
     {
-        if (AllocateMemoryAddress != IntPtr.Zero)
-            Win32.VirtualFreeEx(Memory.Bf1ProHandle, AllocateMemoryAddress, 0, AllocationType.Reset);
+        if (AllocateMemAddress != IntPtr.Zero)
+            Win32.VirtualFreeEx(Memory.Bf1ProHandle, AllocateMemAddress, 0, AllocationType.Reset);
     }
 }
