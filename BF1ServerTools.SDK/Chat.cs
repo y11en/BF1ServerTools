@@ -1,4 +1,6 @@
-﻿namespace BF1ServerTools.SDK;
+﻿using BF1ServerTools.SDK.Core;
+
+namespace BF1ServerTools.SDK;
 
 public static class Chat
 {

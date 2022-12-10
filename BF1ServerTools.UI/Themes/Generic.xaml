@@ -1,6 +1,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Global.xaml" />
+
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Image.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Button.xaml" />
+
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/LoadingSpinner.xaml" />
+
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

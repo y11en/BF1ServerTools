@@ -1,4 +1,4 @@
-﻿namespace BF1ServerTools.SDK;
+﻿namespace BF1ServerTools.SDK.Core;
 
 public static class Win32
 {
