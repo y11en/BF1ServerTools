@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.SDK", "BF1Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.UI", "BF1ServerTools.UI\BF1ServerTools.UI.csproj", "{81CADC7B-2B26-4BE7-80BD-84B321433146}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.IMG", "BF1ServerTools.IMG\BF1ServerTools.IMG.csproj", "{C0653427-CD57-422D-A5A5-BAA5E49C2394}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,10 @@ Global
 		{81CADC7B-2B26-4BE7-80BD-84B321433146}.Debug|x64.Build.0 = Debug|x64
 		{81CADC7B-2B26-4BE7-80BD-84B321433146}.Release|x64.ActiveCfg = Release|x64
 		{81CADC7B-2B26-4BE7-80BD-84B321433146}.Release|x64.Build.0 = Release|x64
+		{C0653427-CD57-422D-A5A5-BAA5E49C2394}.Debug|x64.ActiveCfg = Debug|x64
+		{C0653427-CD57-422D-A5A5-BAA5E49C2394}.Debug|x64.Build.0 = Debug|x64
+		{C0653427-CD57-422D-A5A5-BAA5E49C2394}.Release|x64.ActiveCfg = Release|x64
+		{C0653427-CD57-422D-A5A5-BAA5E49C2394}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

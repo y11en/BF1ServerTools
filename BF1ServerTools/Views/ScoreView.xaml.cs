@@ -1,28 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using BF1ServerTools.SDK;
 
-namespace BF1ServerTools.Views
+namespace BF1ServerTools.Views;
+
+/// <summary>
+/// ScoreView.xaml 的交互逻辑
+/// </summary>
+public partial class ScoreView : UserControl
 {
-    /// <summary>
-    /// ScoreView.xaml 的交互逻辑
-    /// </summary>
-    public partial class ScoreView : UserControl
+    public ScoreView()
     {
-        public ScoreView()
+        InitializeComponent();
+        this.DataContext = this;
+        MainWindow.WindowClosingEvent += MainWindow_WindowClosingEvent;
+
+        new Thread(UpdatePlayerListThread)
         {
-            InitializeComponent();
+            Name = "UpdatePlayerListThread",
+            IsBackground = true
+        }.Start();
+    }
+
+    private void MainWindow_WindowClosingEvent()
+    {
+
+    }
+
+    /// <summary>
+    /// 更新服务器玩家列表线程
+    /// </summary>
+    private void UpdatePlayerListThread()
+    {
+        while (MainWindow.IsAppRunning)
+        {
+            foreach (var item in Player.GetPlayerList())
+            {
+
+            }
+
+            /////////////////////////////////////////////////////////////////////////
+
+            Thread.Sleep(1000);
         }
     }
 }

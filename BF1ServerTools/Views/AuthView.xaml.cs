@@ -10,5 +10,12 @@ public partial class AuthView : UserControl
     public AuthView()
     {
         InitializeComponent();
+        this.DataContext = this;
+        MainWindow.WindowClosingEvent += MainWindow_WindowClosingEvent;
+    }
+
+    private void MainWindow_WindowClosingEvent()
+    {
+
     }
 }

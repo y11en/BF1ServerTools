@@ -39,7 +39,7 @@
             </DockPanel>
             <ComboBox x:Name="ComboBox_ConfigNames" ItemsSource="{Binding ConfigNames}" />
             <Button x:Name="Button_SaveConfig" Content="保存配置文件" />
-            <!--  ***************  -->
+            <!--  ###############  -->
             <ui:UiLabelIcon Content="配置数据" />
             <TextBlock Margin="5" Text="Remid" />
             <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.Remid}" />
@@ -62,10 +62,10 @@
                 x:Name="RadioButton_Mode2"
                 Margin="5"
                 Content="[模式2] 需要玩家登录账号获取Cookies，支持多账号切换" />
-            <!--  ***************  -->
+            <!--  ###############  -->
             <ui:UiLabelIcon Content="Cookies获取" />
             <Button x:Name="Button_GetPlayerCookies" Content="获取玩家Cookies数据" />
-            <!--  ***************  -->
+            <!--  ###############  -->
             <ui:UiLabelIcon Content="验证权限" />
             <Button x:Name="Button_RefreshAuthInfo" Content="刷新玩家Auth信息" />
             <Border
@@ -83,7 +83,7 @@
                     Text="等待玩家操作" />
             </Border>
             <Button x:Name="Button_VerifySessionId" Content="验证玩家SessionId有效性" />
-            <!--  ***************  -->
+            <!--  ###############  -->
             <ui:UiLabelIcon Content="网络检测" />
             <WrapPanel>
                 <Button Margin="5,5,0,0" Content="查询DNS缓存" />
@@ -92,10 +92,12 @@
                 <Button Margin="5,5,0,0" Content="批量Ping检测" />
                 <Button Margin="5,5,0,0" Content="编辑Host文件" />
             </WrapPanel>
-            <!--  ***************  -->
+            <!--  ###############  -->
             <ui:UiLabelIcon Content="其他" />
             <Button x:Name="Button_OpenConfigFolder" Content="打开配置文件夹" />
         </StackPanel>
+        <!--  ******************************  -->
+        <StackPanel Grid.Column="2" />
     </Grid>
 
 </UserControl>
