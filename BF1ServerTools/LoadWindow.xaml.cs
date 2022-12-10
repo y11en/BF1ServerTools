@@ -44,9 +44,9 @@ public partial class LoadWindow
                 LoggerHelper.Info($"当前程序最后编译时间 {CoreUtil.ClientBuildTime}");
 
                 // 客户端程序版本号
-                LoadModel.VersionInfo = CoreUtil.ClientVersionInfo.ToString();
+                LoadModel.VersionInfo = CoreUtil.ClientVersionInfo;
                 // 最后编译时间
-                LoadModel.BuildDate = CoreUtil.ClientBuildTime.ToString();
+                LoadModel.BuildDate = CoreUtil.ClientBuildTime;
 
                 // 关闭第三方进程
                 ProcessUtil.CloseThirdProcess();

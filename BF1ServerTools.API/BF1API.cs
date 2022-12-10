@@ -235,7 +235,6 @@ public static class BF1API
         return respContent;
     }
 
-
     /// <summary>
     /// 更换玩家到指定队伍
     /// </summary>

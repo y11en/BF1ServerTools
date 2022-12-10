@@ -14,11 +14,11 @@ public partial class LoadModel : ObservableObject
     /// 程序版本号
     /// </summary>
     [ObservableProperty]
-    private string versionInfo;
+    private Version versionInfo;
 
     /// <summary>
     /// 程序最后编译时间
     /// </summary>
     [ObservableProperty]
-    private string buildDate;
+    private DateTime buildDate;
 }

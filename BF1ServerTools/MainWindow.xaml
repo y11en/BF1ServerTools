@@ -53,10 +53,10 @@
                     BorderThickness="1">
                     <Image Source="{Binding MainModel.Avatar, Converter={StaticResource StringToImageSourceConverter}}" Style="{StaticResource ImageStyle_HighQuality}" />
                 </Border>
-                <TextBlock
-                    Margin="5,0,5,0"
-                    VerticalAlignment="Center"
-                    Text="{Binding MainModel.AppRunTime, FallbackValue='00:00:00'}" />
+                <StackPanel Margin="5,0,5,0" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding MainModel.AppRunTime, FallbackValue='00:00:00'}" />
+                    <TextBlock FontSize="10" Text="{Binding MainModel.VersionInfo, StringFormat='v{0}', FallbackValue='1.0.0.0'}" />
+                </StackPanel>
             </StackPanel>
             <!--  **************************************  -->
             <StackPanel
@@ -68,56 +68,47 @@
                     CommandParameter="AuthView"
                     Content="权限"
                     Icon="&#xe63b;"
-                    IsChecked="True"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    IsChecked="True" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="ScoreView"
                     Content="得分板"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="DetailView"
                     Content="详情"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="RuleView"
                     Content="规则"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="MonitView"
                     Content="监控"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="LogView"
                     Content="日志"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="ChatView"
                     Content="聊天栏"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="RobotView"
                     Content="机器人"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
                 <ui:UiRadioButtonIcon
                     Command="{Binding NavigateCommand}"
                     CommandParameter="MoreView"
                     Content="更多"
-                    Icon="&#xe63b;"
-                    Style="{StaticResource RadioButtonStyle_NavMenu}" />
+                    Icon="&#xe63b;" />
             </StackPanel>
             <!--  **************************************  -->
         </DockPanel>

@@ -75,6 +75,9 @@ public partial class MainWindow
 
         ////////////////////////////////////////////
 
+        // 客户端程序版本号
+        MainModel.VersionInfo = CoreUtil.ClientVersionInfo;
+
         MainModel.AppRunTime = "loading...";
         MainModel.DisplayName = "loading...";
         MainModel.PersonaId = 0;

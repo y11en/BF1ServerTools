@@ -5,6 +5,12 @@ namespace BF1ServerTools.Models;
 public partial class MainModel : ObservableObject
 {
     /// <summary>
+    /// 程序版本号
+    /// </summary>
+    [ObservableProperty]
+    private Version versionInfo;
+
+    /// <summary>
     /// 程序运行时间
     /// </summary>
     [ObservableProperty]
