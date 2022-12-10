@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BF1ServerTools.API\BF1ServerTools.API.csproj" />
-    <ProjectReference Include="..\BF1ServerTools.IMG\BF1ServerTools.IMG.csproj" />
+    <ProjectReference Include="..\BF1ServerTools.IMG\BF1ServerTools.RES.csproj" />
     <ProjectReference Include="..\BF1ServerTools.SDK\BF1ServerTools.SDK.csproj" />
     <ProjectReference Include="..\BF1ServerTools.UI\BF1ServerTools.UI.csproj" />
   </ItemGroup>

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.SDK", "BF1Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.UI", "BF1ServerTools.UI\BF1ServerTools.UI.csproj", "{81CADC7B-2B26-4BE7-80BD-84B321433146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.IMG", "BF1ServerTools.IMG\BF1ServerTools.IMG.csproj", "{C0653427-CD57-422D-A5A5-BAA5E49C2394}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BF1ServerTools.RES", "BF1ServerTools.RES\BF1ServerTools.RES.csproj", "{C0653427-CD57-422D-A5A5-BAA5E49C2394}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

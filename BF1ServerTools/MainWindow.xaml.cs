@@ -99,6 +99,9 @@ public partial class MainWindow
         // 终止线程内循环
         IsAppRunning = false;
 
+        WindowClosingEvent();
+        LoggerHelper.Info("调用主窗口关闭事件成功");
+
         Chat.FreeMemory();
         LoggerHelper.Info("释放中文聊天指针内存成功");
 

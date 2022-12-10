@@ -1,4 +1,4 @@
-﻿namespace BF1ServerTools.IMG.Img;
+﻿namespace BF1ServerTools.RES.Img;
 
 public static class MapsImg
 {

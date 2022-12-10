@@ -1,4 +1,4 @@
-﻿namespace BF1ServerTools.IMG.Data;
+﻿namespace BF1ServerTools.RES.Data;
 
 public static class ModeData
 {

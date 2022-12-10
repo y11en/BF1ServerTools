@@ -1,11 +1,11 @@
-﻿namespace BF1ServerTools.IMG.Img;
+﻿namespace BF1ServerTools.RES.Img;
 
-public static class WeaponImg
+public static class WeaponsImg
 {
     public static Dictionary<string, string> WeaponsDict = new();
     public static Dictionary<string, string> Weapons2Dict = new();
 
-    static WeaponImg()
+    static WeaponsImg()
     {
         InitDict();
     }

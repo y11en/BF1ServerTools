@@ -552,9 +552,4 @@
     <Resource Include="Assets\Images\Weapons\YataganSword-be484415.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Img\" />
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>
