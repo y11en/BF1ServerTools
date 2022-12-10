@@ -12,9 +12,50 @@ public static class Globals
     ///////////////////////////////////////////////////////
 
     /// <summary>
+    /// 玩家Avatar
+    /// </summary>
+    public static string Avatar = string.Empty;
+    /// <summary>
+    /// 玩家DisplayName
+    /// </summary>
+    public static string DisplayName = string.Empty;
+    /// <summary>
+    /// 玩家PersonaId
+    /// </summary>
+    public static long PersonaId = 0;
+    /// <summary>
+    /// 玩家Remid
+    /// </summary>
+    public static string Remid = string.Empty;
+    /// <summary>
+    /// 玩家Sid
+    /// </summary>
+    public static string Sid = string.Empty;
+    /// <summary>
+    /// 玩家SessionId
+    /// </summary>
+    public static string SessionId = string.Empty;
+    /// <summary>
+    /// 玩家登录令牌，有效期4小时
+    /// </summary>
+    public static string AccessToken = string.Empty;
+
+    /// <summary>
     /// 当前服务器游戏Id
     /// </summary>
-    public static string GameId = string.Empty;
+    public static long GameId = 0;
+
+    /// <summary>
+    /// 判断当前玩家是否为管理员
+    /// </summary>
+    /// <returns></returns>
+    public static bool LoginPlayerIsAdmin
+    {
+        get
+        {
+            return ServerAdmins_PID.Contains(PersonaId);
+        }
+    }
 
     ///////////////////////////////////////////////////////
 

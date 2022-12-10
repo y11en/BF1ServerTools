@@ -154,37 +154,37 @@ public static class ClientUtil
         switch (squadID)
         {
             case 0:
-                return "N 无";
+                return "无";
             case 1:
-                return "A 苹果";
+                return "苹果";
             case 2:
-                return "B 奶油";
+                return "奶油";
             case 3:
-                return "C 查理";
+                return "查理";
             case 4:
-                return "D 达夫";
+                return "达夫";
             case 5:
-                return "E 爱德华";
+                return "爱德华";
             case 6:
-                return "F 弗莱迪";
+                return "弗莱迪";
             case 7:
-                return "G 乔治";
+                return "乔治";
             case 8:
-                return "H 哈利";
+                return "哈利";
             case 9:
-                return "I 墨水";
+                return "墨水";
             case 10:
-                return "J 强尼";
+                return "强尼";
             case 11:
-                return "K 国王";
+                return "国王";
             case 12:
-                return "L 伦敦";
+                return "伦敦";
             case 13:
-                return "M 猿猴";
+                return "猿猴";
             case 14:
-                return "N 疯子";
+                return "疯子";
             case 15:
-                return "O 橘子";
+                return "橘子";
             default:
                 return squadID.ToString();
         }

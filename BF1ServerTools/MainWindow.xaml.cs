@@ -14,7 +14,7 @@ namespace BF1ServerTools;
 /// </summary>
 public partial class MainWindow
 {
-        /// <summary>
+    /// <summary>
     /// 主窗口关闭委托
     /// </summary>
     public delegate void WindowClosingDelegate();
@@ -102,14 +102,17 @@ public partial class MainWindow
         WindowClosingEvent();
         LoggerHelper.Info("调用主窗口关闭事件成功");
 
+        ProcessUtil.CloseThirdProcess();
+        LoggerHelper.Info("关闭第三方进程成功");
+
         Chat.FreeMemory();
         LoggerHelper.Info("释放中文聊天指针内存成功");
 
         Memory.UnInitialize();
         LoggerHelper.Info("释放内存模块进程句柄成功");
 
-        ProcessUtil.CloseThirdProcess();
-        LoggerHelper.Info("关闭第三方进程成功");
+        SQLiteHelper.UnInitialize();
+        LoggerHelper.Info("关闭数据库链接成功");
 
         Application.Current.Shutdown();
         LoggerHelper.Info("程序关闭\n\n");

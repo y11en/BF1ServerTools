@@ -1,4 +1,6 @@
-﻿namespace BF1ServerTools.Utils;
+﻿using BF1ServerTools.Helper;
+
+namespace BF1ServerTools.Utils;
 
 public static class PlayerUtil
 {
@@ -252,5 +254,58 @@ public static class PlayerUtil
 
             return 0;
         }
+    }
+
+    /// <summary>
+    /// 检查SessionId
+    /// </summary>
+    /// <returns></returns>
+    public static bool CheckSId()
+    {
+        if (string.IsNullOrEmpty(Globals.SessionId))
+        {
+            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 检查SessionId和管理员授权
+    /// </summary>
+    /// <returns></returns>
+    public static bool CheckAuth()
+    {
+        if (string.IsNullOrEmpty(Globals.SessionId))
+        {
+            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
+            return false;
+        }
+
+        if (!Globals.LoginPlayerIsAdmin)
+        {
+            NotifierHelper.Show(NotifierType.Warning, $"玩家 {Globals.DisplayName} 不是当前服务器的管理员");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 获取默认踢人中文原因
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public static string GetDefaultChsReason(string reason)
+    {
+        return reason switch
+        {
+            "OFFENSIVEBEHAVIOR" => "DEFAULT 攻击性行为",
+            "LATENCY" => "DEFAULT 延迟",
+            "RULEVIOLATION" => "DEFAULT 违反规则",
+            "GENERAL" => "DEFAULT 其他",
+            _ => reason,
+        };
     }
 }

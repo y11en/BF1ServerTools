@@ -21,6 +21,7 @@
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/LabelIcon.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/RadioButtonIcon.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ProgressBarScore.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/TextBoxHint.xaml" />
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/LoadingSpinner.xaml" />
 

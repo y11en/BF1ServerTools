@@ -93,6 +93,21 @@ public partial class LoadWindow
                     return;
                 }
 
+                LoadModel.LoadState = "正在初始化SQLite数据库...";
+                // 初始化SQLite数据库
+                if (!SQLiteHelper.Initialize())
+                {
+                    LoadModel.LoadState = "SQLite数据库初始化失败！程序即将关闭";
+                    LoggerHelper.Error("SQLite数据库初始化失败");
+
+                    Task.Delay(2000).Wait();
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Application.Current.Shutdown();
+                    });
+                    return;
+                }
+
                 /////////////////////////////////////////////////////////////////////
 
                 LoadModel.LoadState = "正在准备最后工作...";

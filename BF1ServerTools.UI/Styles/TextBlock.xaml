@@ -12,4 +12,18 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <!--  通用文本提示样式  -->
+    <Style x:Key="TextBlockStyle_Hint" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Foreground" Value="Green" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="TextBlockStyle_Title" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="5,5,5,0" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
 </ResourceDictionary>

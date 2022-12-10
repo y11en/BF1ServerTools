@@ -5,10 +5,95 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BF1ServerTools.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
     mc:Ignorable="d">
 
-    <Grid />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--  ******************  -->
+        <UniformGrid Columns="4">
+            <TextBlock
+                Margin="0,5,0,0"
+                Style="{StaticResource TextBlockStyle_Title}"
+                Text="📇 手动操作" />
+            <TextBlock
+                Margin="0,5,0,0"
+                Style="{StaticResource TextBlockStyle_Title}"
+                Text="✔️ 踢出成功" />
+            <TextBlock
+                Margin="0,5,0,0"
+                Style="{StaticResource TextBlockStyle_Title}"
+                Text="❌ 踢出失败" />
+            <TextBlock
+                Margin="0,5,0,0"
+                Style="{StaticResource TextBlockStyle_Title}"
+                Text="♻️ 换边记录" />
+        </UniformGrid>
+        <!--  ******************  -->
+        <UniformGrid Grid.Row="1" Columns="4">
+            <TextBox
+                x:Name="TextBox_ScoreKickLog"
+                Margin="0,5,2,0"
+                Style="{StaticResource TextBoxStyle_Logger}">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            x:Name="MenuItem_ClearScoreKickLog"
+                            Click="MenuItem_ClearScoreKickLog_Click"
+                            Header="清空手动操作日志"
+                            Icon="🗑" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+            <TextBox
+                x:Name="TextBox_KickOKLog"
+                Margin="2,5,2,0"
+                Foreground="Green"
+                Style="{StaticResource TextBoxStyle_Logger}">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            x:Name="MenuItem_ClearKickOKLog"
+                            Click="MenuItem_ClearKickOKLog_Click"
+                            Header="清空踢人成功日志"
+                            Icon="🗑" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+            <TextBox
+                x:Name="TextBox_KickNOLog"
+                Margin="2,5,2,0"
+                Foreground="Red"
+                Style="{StaticResource TextBoxStyle_Logger}">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            x:Name="MenuItem_ClearKickNOLog"
+                            Click="MenuItem_ClearKickNOLog_Click"
+                            Header="清空踢人失败日志"
+                            Icon="🗑" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+            <TextBox
+                x:Name="TextBox_ChangeTeamLog"
+                Margin="2,5,0,0"
+                Style="{StaticResource TextBoxStyle_Logger}">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            x:Name="MenuItem_ClearChangeTeamLog"
+                            Click="MenuItem_ClearChangeTeamLog_Click"
+                            Header="清空更换队伍日志"
+                            Icon="🗑" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </UniformGrid>
+    </Grid>
 
 </UserControl>

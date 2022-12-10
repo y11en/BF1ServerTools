@@ -1,8 +1,12 @@
-﻿using BF1ServerTools.SDK;
+﻿using BF1ServerTools.API;
+using BF1ServerTools.SDK;
 using BF1ServerTools.SDK.Data;
 using BF1ServerTools.RES;
 using BF1ServerTools.Data;
 using BF1ServerTools.Utils;
+using BF1ServerTools.Models;
+using BF1ServerTools.Helper;
+using BF1ServerTools.Windows;
 using BF1ServerTools.Extensions;
 
 namespace BF1ServerTools.Views;
@@ -12,11 +16,23 @@ namespace BF1ServerTools.Views;
 /// </summary>
 public partial class ScoreView : UserControl
 {
+    /// <summary>
+    /// 数据模型绑定
+    /// </summary>
+    public ScoreModel ScoreModel { get; set; } = new();
+
+    ///////////////////////////////////////////////////////
+
     private List<PlayerData> PlayerList_Team01 = new();
     private List<PlayerData> PlayerList_Team02 = new();
 
     private List<PlayerData> PlayerList_Team1 = new();
     private List<PlayerData> PlayerList_Team2 = new();
+
+    /// <summary>
+    /// 当前服务器信息
+    /// </summary>
+    private ServerInfo _serverInfo = new();
 
     ///////////////////////////////////////////////////////
 
@@ -47,6 +63,12 @@ public partial class ScoreView : UserControl
         this.DataContext = this;
         MainWindow.WindowClosingEvent += MainWindow_WindowClosingEvent;
 
+        new Thread(UpdateServerInfoThread)
+        {
+            Name = "UpdateServerInfoThread",
+            IsBackground = true
+        }.Start();
+
         new Thread(UpdatePlayerListThread)
         {
             Name = "UpdatePlayerListThread",
@@ -57,6 +79,21 @@ public partial class ScoreView : UserControl
     private void MainWindow_WindowClosingEvent()
     {
 
+    }
+
+    /// <summary>
+    /// 更新服务器信息线程
+    /// </summary>
+    private void UpdateServerInfoThread()
+    {
+        while (MainWindow.IsAppRunning)
+        {
+
+
+            /////////////////////////////////////////////////////////////////////////
+
+            Thread.Sleep(1000);
+        }
     }
 
     /// <summary>
@@ -72,6 +109,18 @@ public partial class ScoreView : UserControl
             PlayerList_Team02.Clear();
             PlayerList_Team1.Clear();
             PlayerList_Team2.Clear();
+
+            _serverInfo.Team1MaxPlayerCount = 0;
+            _serverInfo.Team1PlayerCount = 0;
+            _serverInfo.Team1Rank150PlayerCount = 0;
+            _serverInfo.Team1AllKillCount = 0;
+            _serverInfo.Team1AllDeadCount = 0;
+
+            _serverInfo.Team2MaxPlayerCount = 0;
+            _serverInfo.Team2PlayerCount = 0;
+            _serverInfo.Team2Rank150PlayerCount = 0;
+            _serverInfo.Team2AllKillCount = 0;
+            _serverInfo.Team2AllDeadCount = 0;
 
             //////////////////////////////// 玩家数据 ////////////////////////////////
 
@@ -94,7 +143,7 @@ public partial class ScoreView : UserControl
                     case 0:
                         if (item.Spectator == 0x01)
                             PlayerList_Team01.Add(item);
-                        else if (Globals.GameId != string.Empty)
+                        else if (Globals.GameId != 0)
                             PlayerList_Team02.Add(item);
                         break;
                     case 1:
@@ -104,6 +153,62 @@ public partial class ScoreView : UserControl
                         PlayerList_Team2.Add(item);
                         break;
                 }
+            }
+
+            //////////////////////////////// 队伍数据整理 ////////////////////////////////
+
+            // 队伍1数据统计
+            foreach (var item in PlayerList_Team1)
+            {
+                // 统计当前服务器玩家数量
+                if (item.Rank != 0)
+                {
+                    _serverInfo.Team1MaxPlayerCount++;
+                }
+
+                // 统计当前服务器存活玩家数量
+                if (item.WeaponS0 != "" || item.WeaponS7 != "")
+                {
+                    _serverInfo.Team1PlayerCount++;
+                }
+
+                // 统计当前服务器150级玩家数量
+                if (item.Rank == 150)
+                {
+                    _serverInfo.Team1Rank150PlayerCount++;
+                }
+
+                // 总击杀数统计
+                _serverInfo.Team1AllKillCount += item.Kill;
+                // 总死亡数统计
+                _serverInfo.Team1AllDeadCount += item.Dead;
+            }
+
+            // 队伍2数据统计
+            foreach (var item in PlayerList_Team2)
+            {
+                // 统计当前服务器玩家数量
+                if (item.Rank != 0)
+                {
+                    _serverInfo.Team2MaxPlayerCount++;
+                }
+
+                // 统计当前服务器存活玩家数量
+                if (item.WeaponS0 != "" || item.WeaponS7 != "")
+                {
+                    _serverInfo.Team2PlayerCount++;
+                }
+
+                // 统计当前服务器150级玩家数量
+                if (item.Rank == 150)
+                {
+                    _serverInfo.Team2Rank150PlayerCount++;
+                }
+
+                // 总击杀数统计
+                _serverInfo.Team2AllKillCount += item.Kill;
+                // 总死亡数统计
+                _serverInfo.Team2AllDeadCount += item.Dead;
             }
 
             // 显示队伍1中文武器名称
@@ -130,6 +235,22 @@ public partial class ScoreView : UserControl
                 PlayerList_Team2[i].WeaponS6 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS6);
                 PlayerList_Team2[i].WeaponS7 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS7);
             }
+
+            //////////////////////////////// 统计信息数据 ////////////////////////////////
+
+            ScoreModel.Team1PlayerCount = _serverInfo.Team1PlayerCount;
+            ScoreModel.Team1MaxPlayerCount = _serverInfo.Team1MaxPlayerCount;
+            ScoreModel.Team1Rank150PlayerCount = _serverInfo.Team1Rank150PlayerCount;
+            ScoreModel.Team1AllKillCount = _serverInfo.Team1AllKillCount;
+            ScoreModel.Team1AllDeadCount = _serverInfo.Team1AllDeadCount;
+
+            ScoreModel.Team2PlayerCount = _serverInfo.Team2PlayerCount;
+            ScoreModel.Team2MaxPlayerCount = _serverInfo.Team2MaxPlayerCount;
+            ScoreModel.Team2Rank150PlayerCount = _serverInfo.Team2Rank150PlayerCount;
+            ScoreModel.Team2AllKillCount = _serverInfo.Team2AllKillCount;
+            ScoreModel.Team2AllDeadCount = _serverInfo.Team2AllDeadCount;
+
+            ScoreModel.AllPlayerCount = _serverInfo.Team1MaxPlayerCount + _serverInfo.Team2MaxPlayerCount;
 
             ////////////////////////////////////////////////////////////////////////////////
 
@@ -419,6 +540,607 @@ public partial class ScoreView : UserControl
                         Name = PlayerList_Team02[i].Name,
                         PersonaId = PlayerList_Team02[i].PersonaId
                     });
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 得分板排序规则选中变更事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ComboBox_ScoreSortRule_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        Globals.OrderBy = (OrderBy)ComboBox_ScoreSortRule.SelectedIndex;
+    }
+
+    /// <summary>
+    /// 队伍1 ListView选中变更事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ListView_Team1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            MenuItem_Team1.Header = $"T1 [{item.Rank}] {item.Name}    {item.Kill}/{item.Dead}/{item.Score}";
+        else
+            MenuItem_Team1.Header = "T1 当前未选中";
+    }
+
+    /// <summary>
+    /// 队伍2 ListView选中变更事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ListView_Team2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            MenuItem_Team2.Header = $"T2 [{item.Rank}] {item.Name}    {item.Kill}/{item.Dead}/{item.Score}";
+        else
+            MenuItem_Team2.Header = "T2 当前未选中";
+    }
+
+    /// <summary>
+    /// 队伍01 ListBox选中变更事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ListBox_Team01_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            MenuItem_Team01.Header = $"T01 {item.Name} {item.PersonaId}";
+        else
+            MenuItem_Team01.Header = "T01 当前未选中";
+    }
+
+    /// <summary>
+    /// 队伍02 ListBox选中变更事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ListBox_Team02_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            MenuItem_Team02.Header = $"T02 {item.Name} {item.PersonaId}";
+        else
+            MenuItem_Team02.Header = "T02 当前未选中";
+    }
+
+    /// <summary>
+    /// 手动踢出玩家
+    /// </summary>
+    /// <param name="rank"></param>
+    /// <param name="displayName"></param>
+    /// <param name="personaId"></param>
+    /// <param name="reason"></param>
+    private async void KickPlayer(int rank, string displayName, long personaId, string reason)
+    {
+        if (!PlayerUtil.CheckAuth())
+            return;
+
+        NotifierHelper.Show(NotifierType.Information, $"正在踢出玩家 {displayName} 中...");
+
+        var result = await BF1API.RSPKickPlayer(Globals.SessionId, Globals.GameId, personaId, reason);
+        if (result.IsSuccess)
+        {
+            var info = new AutoKickInfo()
+            {
+                Rank = rank,
+                Name = displayName,
+                PersonaId = personaId,
+                Reason = PlayerUtil.GetDefaultChsReason(reason),
+                State = "踢出成功"
+            };
+            LogView.ActionScoreKickLog(info);
+            NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  踢出玩家 {displayName} 成功");
+        }
+        else
+        {
+            var info = new AutoKickInfo()
+            {
+                Rank = rank,
+                Name = displayName,
+                PersonaId = personaId,
+                Reason = PlayerUtil.GetDefaultChsReason(reason),
+                State = $"踢出失败  {result.Content}"
+            };
+            LogView.ActionScoreKickLog(info);
+            NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  踢出玩家 {displayName} 失败\n{result.Content}");
+        }
+    }
+
+    /// <summary>
+    /// 复制数据到剪切板
+    /// </summary>
+    /// <param name="obj"></param>
+    private void Copy2Clipboard(object obj)
+    {
+        Clipboard.SetDataObject(obj);
+        NotifierHelper.Show(NotifierType.Success, $"复制 {obj} 到剪切板成功");
+    }
+
+    #region 队伍1 右键菜单事件
+    private void MenuItem_Team1_KickPlayerCustom_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            var customKickWindow = new CustomKickWindow(item.Rank, item.Name, item.PersonaId)
+            {
+                Owner = MainWindow.MainWindowInstance
+            };
+            customKickWindow.ShowDialog();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team1_KickPlayerOffensiveBehavior_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "OFFENSIVEBEHAVIOR");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team1_KickPlayerLatency_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "LATENCY");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team1_KickPlayerRuleViolation_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "RULEVIOLATION");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team1_KickPlayerGeneral_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "GENERAL");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private async void MenuItem_Team1_ChangePlayerTeam_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            NotifierHelper.Show(NotifierType.Information, $"正在更换玩家 {item.Name} 队伍中...");
+
+            var result = await BF1API.RSPMovePlayer(Globals.SessionId, Globals.GameId, item.PersonaId, 1);
+            if (result.IsSuccess)
+                NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  更换玩家 {item.Name} 队伍成功");
+            else
+                NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  更换玩家 {item.Name} 队伍失败\n{result.Content}");
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team1_CopyPlayerName_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            Copy2Clipboard(item.Name);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team1_CopyPlayerPersonaId_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+            Copy2Clipboard(item.PersonaId);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team1_CopyPlayerAllData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+        {
+            var builder = new StringBuilder();
+
+            builder.Append($"序号：{item.Index}，");
+            builder.Append($"等级：{item.Rank}，");
+            builder.Append($"战队：{item.Clan}，");
+            builder.Append($"玩家ID：{item.Name}，");
+            builder.Append($"数字ID：{item.PersonaId}，");
+            builder.Append($"小队：{item.SquadId2}，");
+            builder.Append($"击杀：{item.Kill}，");
+            builder.Append($"死亡：{item.Dead}，");
+            builder.Append($"KD：{item.Kd}，");
+            builder.Append($"KPM：{item.Kpm}，");
+            builder.Append($"生涯KD：{item.LifeKd}，");
+            builder.Append($"生涯KPM：{item.LifeKpm}，");
+            builder.Append($"得分：{item.Score}，");
+            builder.Append($"兵种：{item.Kit2}，");
+            builder.Append($"主武器：{item.WeaponS0}，");
+            builder.Append($"配枪：{item.WeaponS1}，");
+            builder.Append($"配备一：{item.WeaponS2}，");
+            builder.Append($"配备二：{item.WeaponS5}，");
+            builder.Append($"特殊：{item.WeaponS3}，");
+            builder.Append($"手榴弹：{item.WeaponS6}，");
+            builder.Append($"近战：{item.WeaponS7}。");
+
+            Copy2Clipboard(builder.ToString());
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team1_QueryPlayerData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team1.SelectedItem is PlayerDataModel item)
+        {
+            if (!PlayerUtil.CheckSId())
+                return;
+
+            var queryRecordWindow = new QueryRecordWindow(item.Name, item.PersonaId, item.Rank);
+            queryRecordWindow.Show();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T1 当前未选中任何玩家，操作取消");
+        }
+    }
+    #endregion
+
+    #region 队伍2 右键菜单事件
+    private void MenuItem_Team2_KickPlayerCustom_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            var customKickWindow = new CustomKickWindow(item.Rank, item.Name, item.PersonaId)
+            {
+                Owner = MainWindow.MainWindowInstance
+            };
+            customKickWindow.ShowDialog();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team2_KickPlayerOffensiveBehavior_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "OFFENSIVEBEHAVIOR");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team2_KickPlayerLatency_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "LATENCY");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team2_KickPlayerRuleViolation_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "RULEVIOLATION");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team2_KickPlayerGeneral_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            KickPlayer(item.Rank, item.Name, item.PersonaId, "GENERAL");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private async void MenuItem_Team2_ChangePlayerTeam_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            NotifierHelper.Show(NotifierType.Information, $"正在更换玩家 {item.Name} 队伍中...");
+
+            var result = await BF1API.RSPMovePlayer(Globals.SessionId, Globals.GameId, item.PersonaId, 2);
+            if (result.IsSuccess)
+                NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  更换玩家 {item.Name} 队伍成功");
+            else
+                NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  更换玩家 {item.Name} 队伍失败\n{result.Content}");
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team2_CopyPlayerName_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            Copy2Clipboard(item.Name);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team2_CopyPlayerPersonaId_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+            Copy2Clipboard(item.PersonaId);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team2_CopyPlayerAllData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+        {
+            var builder = new StringBuilder();
+
+            builder.Append($"序号：{item.Index}，");
+            builder.Append($"等级：{item.Rank}，");
+            builder.Append($"战队：{item.Clan}，");
+            builder.Append($"玩家ID：{item.Name}，");
+            builder.Append($"数字ID：{item.PersonaId}，");
+            builder.Append($"小队：{item.SquadId2}，");
+            builder.Append($"击杀：{item.Kill}，");
+            builder.Append($"死亡：{item.Dead}，");
+            builder.Append($"KD：{item.Kd}，");
+            builder.Append($"KPM：{item.Kpm}，");
+            builder.Append($"生涯KD：{item.LifeKd}，");
+            builder.Append($"生涯KPM：{item.LifeKpm}，");
+            builder.Append($"得分：{item.Score}，");
+            builder.Append($"兵种：{item.Kit2}，");
+            builder.Append($"主武器：{item.WeaponS0}，");
+            builder.Append($"配枪：{item.WeaponS1}，");
+            builder.Append($"配备一：{item.WeaponS2}，");
+            builder.Append($"配备二：{item.WeaponS5}，");
+            builder.Append($"特殊：{item.WeaponS3}，");
+            builder.Append($"手榴弹：{item.WeaponS6}，");
+            builder.Append($"近战：{item.WeaponS7}。");
+
+            Copy2Clipboard(builder.ToString());
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team2_QueryPlayerData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListView_Team2.SelectedItem is PlayerDataModel item)
+        {
+            if (string.IsNullOrEmpty(Globals.SessionId))
+            {
+                NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
+                return;
+            }
+
+            var queryRecordWindow = new QueryRecordWindow(item.Name, item.PersonaId, item.Rank);
+            queryRecordWindow.Show();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T2 当前未选中任何玩家，操作取消");
+        }
+    }
+    #endregion
+
+    #region 队伍01 右键菜单事件
+    private void MenuItem_Team01_KickPlayerCustom_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            var customKickWindow = new CustomKickWindow(-1, item.Name, item.PersonaId)
+            {
+                Owner = MainWindow.MainWindowInstance
+            };
+            customKickWindow.ShowDialog();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team01_KickPlayerOffensiveBehavior_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            KickPlayer(-1, item.Name, item.PersonaId, "OFFENSIVEBEHAVIOR");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_KickPlayerLatency_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            KickPlayer(-1, item.Name, item.PersonaId, "LATENCY");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_KickPlayerRuleViolation_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            KickPlayer(-1, item.Name, item.PersonaId, "RULEVIOLATION");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_KickPlayerGeneral_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            KickPlayer(-1, item.Name, item.PersonaId, "GENERAL");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_CopyPlayerName_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            Copy2Clipboard(item.Name);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_CopyPlayerPersonaId_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+            Copy2Clipboard(item.PersonaId);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team01_QueryPlayerData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team01.SelectedItem is SpectatorInfo item)
+        {
+            if (!PlayerUtil.CheckSId())
+                return;
+
+            var queryRecordWindow = new QueryRecordWindow(item.Name, item.PersonaId, -1);
+            queryRecordWindow.Show();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T01 当前未选中任何玩家，操作取消");
+        }
+    }
+    #endregion
+
+    #region 队伍02 右键菜单事件
+    private void MenuItem_Team02_KickPlayerCustom_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+        {
+            if (!PlayerUtil.CheckAuth())
+                return;
+
+            var customKickWindow = new CustomKickWindow(-2, item.Name, item.PersonaId)
+            {
+                Owner = MainWindow.MainWindowInstance
+            };
+            customKickWindow.ShowDialog();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+        }
+    }
+
+    private void MenuItem_Team02_KickPlayerOffensiveBehavior_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            KickPlayer(-2, item.Name, item.PersonaId, "OFFENSIVEBEHAVIOR");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_KickPlayerLatency_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            KickPlayer(-2, item.Name, item.PersonaId, "LATENCY");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_KickPlayerRuleViolation_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            KickPlayer(-2, item.Name, item.PersonaId, "RULEVIOLATION");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_KickPlayerGeneral_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            KickPlayer(-2, item.Name, item.PersonaId, "GENERAL");
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_CopyPlayerName_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            Copy2Clipboard(item.Name);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_CopyPlayerPersonaId_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+            Copy2Clipboard(item.PersonaId);
+        else
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+    }
+
+    private void MenuItem_Team02_QueryPlayerData_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_Team02.SelectedItem is SpectatorInfo item)
+        {
+            if (!PlayerUtil.CheckSId())
+                return;
+
+            var queryRecordWindow = new QueryRecordWindow(item.Name, item.PersonaId, -2);
+            queryRecordWindow.Show();
+        }
+        else
+        {
+            NotifierHelper.Show(NotifierType.Warning, "T02 当前未选中任何玩家，操作取消");
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// 自动调整列宽
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Button_AutoColumWidth_Click(object sender, RoutedEventArgs e)
+    {
+        lock (this)
+        {
+            if (ListView_Team1.View is GridView gv1)
+            {
+                foreach (GridViewColumn gvc in gv1.Columns)
+                {
+                    gvc.Width = 100;
+                    gvc.Width = double.NaN;
+                }
+            }
+
+            if (ListView_Team2.View is GridView gv2)
+            {
+                foreach (GridViewColumn gvc in gv2.Columns)
+                {
+                    gvc.Width = 100;
+                    gvc.Width = double.NaN;
                 }
             }
         }

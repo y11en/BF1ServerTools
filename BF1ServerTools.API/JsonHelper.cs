@@ -1,4 +1,4 @@
-﻿namespace BF1ServerTools.API.Resp;
+﻿namespace BF1ServerTools.API;
 
 public static class JsonHelper
 {
