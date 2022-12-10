@@ -347,13 +347,13 @@
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding Admin}" Value="False" />
-                                                            <Condition Binding="{Binding VIP}" Value="False" />
+                                                            <Condition Binding="{Binding Vip}" Value="False" />
                                                             <Condition Binding="{Binding White}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Foreground" Value="{StaticResource Color_White}" />
                                                         <Setter Property="FontWeight" Value="Bold" />
                                                     </MultiDataTrigger>
-                                                    <DataTrigger Binding="{Binding VIP}" Value="True">
+                                                    <DataTrigger Binding="{Binding Vip}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource Color_VIP}" />
                                                         <Setter Property="FontWeight" Value="Bold" />
                                                     </DataTrigger>
@@ -478,13 +478,13 @@
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding Admin}" Value="False" />
-                                                            <Condition Binding="{Binding VIP}" Value="False" />
+                                                            <Condition Binding="{Binding Vip}" Value="False" />
                                                             <Condition Binding="{Binding White}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Foreground" Value="{StaticResource Color_White}" />
                                                         <Setter Property="FontWeight" Value="Bold" />
                                                     </MultiDataTrigger>
-                                                    <DataTrigger Binding="{Binding VIP}" Value="True">
+                                                    <DataTrigger Binding="{Binding Vip}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource Color_VIP}" />
                                                         <Setter Property="FontWeight" Value="Bold" />
                                                     </DataTrigger>
@@ -695,7 +695,6 @@
                             x:Name="Button_AutoColumWidth"
                             Margin="0,0,3,3"
                             Content="自动调整列宽" />
-
                     </StackPanel>
                 </StackPanel>
                 <!--  *******************  -->

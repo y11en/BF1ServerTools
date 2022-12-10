@@ -31,10 +31,16 @@ public partial class PlayerDataModel : ObservableObject, IComparable<PlayerDataM
     private long personaId;
 
     /// <summary>
-    /// 玩家小队ID
+    /// 玩家小队Id
     /// </summary>
     [ObservableProperty]
-    private string squadId;
+    private int squadId;
+
+    /// <summary>
+    /// 玩家小队Id
+    /// </summary>
+    [ObservableProperty]
+    private string squadId2;
 
     ///////////////////////////////////////////////////////////////////////
 
