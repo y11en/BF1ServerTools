@@ -47,6 +47,7 @@
     <PackageReference Include="Chinese" Version="0.5.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1462.37" />
     <PackageReference Include="NLog" Version="5.1.0" />
     <PackageReference Include="Notification.Wpf" Version="6.1.0.5" />
   </ItemGroup>

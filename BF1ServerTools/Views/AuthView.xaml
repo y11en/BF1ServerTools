@@ -37,18 +37,24 @@
                     <TextBlock Text="{Binding AuthModel.PersonaId, FallbackValue='玩家数字ID'}" />
                 </StackPanel>
             </DockPanel>
-            <ComboBox x:Name="ComboBox_ConfigNames" ItemsSource="{Binding ConfigNames}" />
-            <Button x:Name="Button_SaveConfig" Content="保存配置文件" />
+            <ComboBox
+                x:Name="ComboBox_ConfigNames"
+                ItemsSource="{Binding ConfigNames}"
+                SelectionChanged="ComboBox_ConfigNames_SelectionChanged" />
+            <Button
+                x:Name="Button_SaveConfig"
+                Click="Button_SaveConfig_Click"
+                Content="保存配置文件" />
             <!--  ###############  -->
             <ui:UiLabelIcon Content="配置数据" />
             <TextBlock Margin="5" Text="Remid" />
             <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.Remid}" />
             <TextBlock Margin="5" Text="Sid" />
             <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.Sid}" />
-            <TextBlock Margin="5" Text="SessionId" />
-            <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.SessionId}" />
-            <TextBlock Margin="5" Text="AccessToken" />
+            <TextBlock Margin="5" Text="Token" />
             <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.AccessToken}" />
+            <TextBlock Margin="5" Text="SessionId" />
+            <TextBox Style="{StaticResource TextBoxStyle_AuthInfo}" Text="{Binding AuthModel.SessionId2}" />
         </StackPanel>
         <!--  ******************************  -->
         <StackPanel Grid.Column="1">
@@ -56,18 +62,27 @@
             <RadioButton
                 x:Name="RadioButton_Mode1"
                 Margin="5"
+                Click="RadioButton_Mode12_Click"
                 Content="[模式1] 自动读取当前战地1游戏账号SessionId，开箱即用"
-                IsChecked="True" />
+                GroupName="Mode" />
             <RadioButton
                 x:Name="RadioButton_Mode2"
                 Margin="5"
-                Content="[模式2] 需要玩家登录账号获取Cookies，支持多账号切换" />
+                Click="RadioButton_Mode12_Click"
+                Content="[模式2] 需要玩家登录账号获取Cookies，支持多账号切换"
+                GroupName="Mode" />
             <!--  ###############  -->
             <ui:UiLabelIcon Content="Cookies获取" />
-            <Button x:Name="Button_GetPlayerCookies" Content="获取玩家Cookies数据" />
+            <Button
+                x:Name="Button_GetPlayerCookies"
+                Click="Button_GetPlayerCookies_Click"
+                Content="获取玩家Cookies数据" />
             <!--  ###############  -->
             <ui:UiLabelIcon Content="验证权限" />
-            <Button x:Name="Button_RefreshAuthInfo" Content="刷新玩家Auth信息" />
+            <Button
+                x:Name="Button_RefreshAuthInfo"
+                Click="Button_RefreshAuthInfo_Click"
+                Content="刷新玩家Auth信息" />
             <Border
                 x:Name="Border_SessionIdState"
                 Margin="5"
@@ -82,22 +97,102 @@
                     Foreground="White"
                     Text="等待玩家操作" />
             </Border>
-            <Button x:Name="Button_VerifySessionId" Content="验证玩家SessionId有效性" />
+            <Button
+                x:Name="Button_VerifySessionId"
+                Click="Button_VerifySessionId_Click"
+                Content="验证玩家SessionId有效性" />
             <!--  ###############  -->
             <ui:UiLabelIcon Content="网络检测" />
             <WrapPanel>
-                <Button Margin="5,5,0,0" Content="查询DNS缓存" />
-                <Button Margin="5,5,0,0" Content="刷新DNS缓存" />
-                <Button Margin="5,5,0,0" Content="检测EA服务器本地解析" />
-                <Button Margin="5,5,0,0" Content="批量Ping检测" />
-                <Button Margin="5,5,0,0" Content="编辑Host文件" />
+                <Button
+                    Margin="5,5,0,0"
+                    Click="Button_DNS_Click"
+                    Content="查询DNS缓存" />
+                <Button
+                    Margin="5,5,0,0"
+                    Click="Button_DNS_Click"
+                    Content="刷新DNS缓存" />
+                <Button
+                    Margin="5,5,0,0"
+                    Click="Button_DNS_Click"
+                    Content="检测EA服务器本地解析" />
+                <Button
+                    Margin="5,5,0,0"
+                    Click="Button_DNS_Click"
+                    Content="批量Ping检测" />
+                <Button
+                    Margin="5,5,0,0"
+                    Click="Button_DNS_Click"
+                    Content="编辑Host文件" />
             </WrapPanel>
             <!--  ###############  -->
             <ui:UiLabelIcon Content="其他" />
-            <Button x:Name="Button_OpenConfigFolder" Content="打开配置文件夹" />
+            <Button
+                x:Name="Button_OpenConfigFolder"
+                Click="Button_OpenConfigFolder_Click"
+                Content="打开配置文件夹" />
         </StackPanel>
         <!--  ******************************  -->
-        <StackPanel Grid.Column="2" />
+        <RichTextBox
+            Grid.Column="2"
+            Margin="5"
+            Style="{StaticResource RichTextBoxStyle_Normal}">
+            <FlowDocument>
+                <Paragraph Style="{StaticResource ParagraphStyle_H18}">
+                    网络优化指南
+                </Paragraph>
+
+                <Paragraph Style="{StaticResource ParagraphStyle_H16}">
+                    ● EA登录
+                </Paragraph>
+                <Paragraph Style="{StaticResource ParagraphStyle_Content}">
+                    主要用于登录EA账号获取Cookies<LineBreak />
+                    ————————————————<LineBreak />
+                    accounts.ea.com<LineBreak />
+                    signin.ea.com<LineBreak />
+                    gateway.ea.com</Paragraph>
+
+                <Paragraph Style="{StaticResource ParagraphStyle_H16}">
+                    ● EA静态资源
+                </Paragraph>
+                <Paragraph Style="{StaticResource ParagraphStyle_Content}">
+                    主要用于获取EA服务器静态资源，如玩家头像，武器图标等<LineBreak />
+                    ————————————————<LineBreak />
+                    eaassets-a.akamaihd.net</Paragraph>
+
+                <Paragraph Style="{StaticResource ParagraphStyle_H16}">
+                    ● 战地1 API
+                </Paragraph>
+                <Paragraph Style="{StaticResource ParagraphStyle_Content}">
+                    主要用于操作服务器，如踢人、换图等管理员操作（此域名禁Ping）<LineBreak />
+                    ————————————————<LineBreak />
+                    sparta-gw.battlelog.com</Paragraph>
+
+                <Paragraph Style="{StaticResource ParagraphStyle_H18}">
+                    Host优化
+                </Paragraph>
+                <Paragraph Style="{StaticResource ParagraphStyle_Content}">
+                    若EA服务访问正常，请忽略以下操作（否则可能会导致更慢）<LineBreak />
+                    ————————————————<LineBreak />
+                    23.2.16.51 eaassets-a.akamaihd.net<LineBreak />
+                    103.151.179.4 accounts.ea.com<LineBreak />
+                    103.151.179.4 signin.ea.com<LineBreak />
+                    103.151.179.4 gateway.ea.com<LineBreak />
+                    103.151.179.4 sparta-gw.battlelog.com</Paragraph>
+
+                <Paragraph Style="{StaticResource ParagraphStyle_H18}">
+                    Host编辑器
+                </Paragraph>
+                <Paragraph Style="{StaticResource ParagraphStyle_Content}">
+                    <Hyperlink
+                        Click="Hyperlink_Click"
+                        NavigateUri="https://www.dogfight360.com/blog/475/"
+                        Style="{StaticResource HyperlinkStyle_Base}">
+                        UsbEAm Hosts Editor [多平台hosts修改] V3.63
+                    </Hyperlink>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 
 </UserControl>

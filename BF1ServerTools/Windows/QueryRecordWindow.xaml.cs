@@ -58,7 +58,7 @@ public partial class QueryRecordWindow
     {
         this.DataContext = this;
 
-        Title = $"{this.Title} # 玩家ID : {PlayerName} # 数字ID : {PersonaId}";
+        Title = $"{this.Title} > 玩家ID : {PlayerName} > 数字ID : {PersonaId}";
 
         if (PersonaId != 0)
         {

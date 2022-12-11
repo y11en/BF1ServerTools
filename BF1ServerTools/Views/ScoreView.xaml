@@ -45,7 +45,6 @@
                                 Margin="5"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                FontWeight="Bold"
                                 Foreground="#4A9B2C"
                                 Text="|" />
                             <TextBlock

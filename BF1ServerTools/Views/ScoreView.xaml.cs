@@ -8,9 +8,6 @@ using BF1ServerTools.Models;
 using BF1ServerTools.Helper;
 using BF1ServerTools.Windows;
 using BF1ServerTools.Extensions;
-using System.Reflection;
-using static BF1ServerTools.API.RespJson.FullServerDetails.Result;
-using BF1ServerTools.SDK.Core;
 
 namespace BF1ServerTools.Views;
 
@@ -379,9 +376,7 @@ public partial class ScoreView : UserControl
     private void UpdateListViewTeam1()
     {
         if (PlayerList_Team1.Count == 0 && ListView_PlayerList_Team1.Count != 0)
-        {
             ListView_PlayerList_Team1.Clear();
-        }
 
         if (PlayerList_Team1.Count != 0)
         {
@@ -466,9 +461,7 @@ public partial class ScoreView : UserControl
 
             // 修正序号
             for (int i = 0; i < ListView_PlayerList_Team1.Count; i++)
-            {
                 ListView_PlayerList_Team1[i].Index = i + 1;
-            }
         }
     }
 
@@ -478,9 +471,7 @@ public partial class ScoreView : UserControl
     private void UpdateListViewTeam2()
     {
         if (PlayerList_Team2.Count == 0 && ListView_PlayerList_Team2.Count != 0)
-        {
             ListView_PlayerList_Team2.Clear();
-        }
 
         if (PlayerList_Team2.Count != 0)
         {
@@ -564,9 +555,7 @@ public partial class ScoreView : UserControl
 
             // 修正序号
             for (int i = 0; i < ListView_PlayerList_Team2.Count; i++)
-            {
                 ListView_PlayerList_Team2[i].Index = i + 1;
-            }
         }
     }
 
@@ -576,9 +565,7 @@ public partial class ScoreView : UserControl
     private void UpdateListBoxTeam01()
     {
         if (PlayerList_Team01.Count == 0 && ListBox_PlayerList_Team01.Count != 0)
-        {
             ListBox_PlayerList_Team01.Clear();
-        }
 
         if (PlayerList_Team01.Count != 0)
         {
@@ -610,9 +597,7 @@ public partial class ScoreView : UserControl
     private void UpdateListBoxTeam02()
     {
         if (PlayerList_Team02.Count == 0 && ListBox_PlayerList_Team02.Count != 0)
-        {
             ListBox_PlayerList_Team02.Clear();
-        }
 
         if (PlayerList_Team02.Count != 0)
         {
@@ -858,9 +843,10 @@ public partial class ScoreView : UserControl
             builder.Append($"死亡：{item.Dead}，");
             builder.Append($"KD：{item.Kd}，");
             builder.Append($"KPM：{item.Kpm}，");
+            builder.Append($"得分：{item.Score}，");
             builder.Append($"生涯KD：{item.LifeKd}，");
             builder.Append($"生涯KPM：{item.LifeKpm}，");
-            builder.Append($"得分：{item.Score}，");
+            builder.Append($"生涯时长：{item.LifeTime}，");
             builder.Append($"兵种：{item.Kit2}，");
             builder.Append($"主武器：{item.WeaponS0}，");
             builder.Append($"配枪：{item.WeaponS1}，");
@@ -998,11 +984,12 @@ public partial class ScoreView : UserControl
             builder.Append($"小队：{item.SquadId2}，");
             builder.Append($"击杀：{item.Kill}，");
             builder.Append($"死亡：{item.Dead}，");
+            builder.Append($"得分：{item.Score}，");
             builder.Append($"KD：{item.Kd}，");
             builder.Append($"KPM：{item.Kpm}，");
             builder.Append($"生涯KD：{item.LifeKd}，");
             builder.Append($"生涯KPM：{item.LifeKpm}，");
-            builder.Append($"得分：{item.Score}，");
+            builder.Append($"生涯时长：{item.LifeTime}，");
             builder.Append($"兵种：{item.Kit2}，");
             builder.Append($"主武器：{item.WeaponS0}，");
             builder.Append($"配枪：{item.WeaponS1}，");

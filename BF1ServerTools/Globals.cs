@@ -23,6 +23,7 @@ public static class Globals
     /// 玩家PersonaId
     /// </summary>
     public static long PersonaId = 0;
+
     /// <summary>
     /// 玩家Remid
     /// </summary>
@@ -32,18 +33,39 @@ public static class Globals
     /// </summary>
     public static string Sid = string.Empty;
     /// <summary>
-    /// 玩家SessionId
-    /// </summary>
-    public static string SessionId = string.Empty;
-    /// <summary>
     /// 玩家登录令牌，有效期4小时
     /// </summary>
     public static string AccessToken = string.Empty;
 
     /// <summary>
+    /// 是否使用模式1
+    /// </summary>
+    public static bool IsUseMode1 = true;
+    /// <summary>
+    /// 模式1 SessionId
+    /// </summary>
+    public static string SessionId1 = string.Empty;
+    /// <summary>
+    /// 模式2 SessionId
+    /// </summary>
+    public static string SessionId2 = string.Empty;
+    /// <summary>
+    /// 全局SessionId
+    /// </summary>
+    public static string SessionId
+    {
+        get
+        {
+            return IsUseMode1 ? SessionId1 : SessionId2;
+        }
+    }
+
+    /// <summary>
     /// 当前服务器游戏Id
     /// </summary>
     public static long GameId = 0;
+
+    ///////////////////////////////////////////////////////
 
     /// <summary>
     /// 判断当前玩家是否为管理员
@@ -56,8 +78,6 @@ public static class Globals
             return ServerAdmins_PID.Contains(PersonaId);
         }
     }
-
-    ///////////////////////////////////////////////////////
 
     /// <summary>
     /// 服务器管理员，PID
