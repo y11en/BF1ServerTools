@@ -64,6 +64,14 @@ public static class Globals
     /// 当前服务器游戏Id
     /// </summary>
     public static long GameId = 0;
+    /// <summary>
+    /// 当前服务器Id
+    /// </summary>
+    public static int ServerId = 0;
+    /// <summary>
+    /// 当前服务器游戏Guid
+    /// </summary>
+    public static string PersistedGameId = string.Empty;
 
     ///////////////////////////////////////////////////////
 

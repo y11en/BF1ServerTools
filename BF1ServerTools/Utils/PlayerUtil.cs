@@ -247,6 +247,33 @@ public static class PlayerUtil
     }
 
     /// <summary>
+    /// 检查SessionId、管理员和ServerId
+    /// </summary>
+    /// <returns></returns>
+    public static bool CheckAuth2()
+    {
+        if (string.IsNullOrEmpty(Globals.SessionId))
+        {
+            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
+            return false;
+        }
+
+        if (!Globals.LoginPlayerIsAdmin)
+        {
+            NotifierHelper.Show(NotifierType.Warning, $"玩家 {Globals.DisplayName} 不是当前服务器的管理员");
+            return false;
+        }
+
+        if (Globals.ServerId == 0)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "ServerId为空，请重新获取服务器详细信息");
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// 获取默认踢人中文原因
     /// </summary>
     /// <param name="reason"></param>
