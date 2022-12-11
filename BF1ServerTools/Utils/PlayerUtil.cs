@@ -19,9 +19,7 @@ public static class PlayerUtil
         var ts = TimeSpan.FromSeconds(second);
 
         if (ts.TotalHours < 1)
-        {
             return ts.TotalMinutes.ToString("0") + " 分钟";
-        }
 
         return ts.TotalHours.ToString("0") + " 小时";
     }
@@ -35,21 +33,13 @@ public static class PlayerUtil
     public static float GetPlayerKD(int kill, int dead)
     {
         if (kill == 0 && dead >= 0)
-        {
             return 0.0f;
-        }
         else if (kill > 0 && dead == 0)
-        {
             return kill;
-        }
         else if (kill > 0 && dead > 0)
-        {
             return (float)kill / dead;
-        }
         else
-        {
             return (float)kill / dead;
-        }
     }
 
     /// <summary>
@@ -61,13 +51,9 @@ public static class PlayerUtil
     public static float GetPlayerKPM(int kill, float minute)
     {
         if (minute != 0.0f)
-        {
             return kill / minute;
-        }
         else
-        {
             return 0.0f;
-        }
     }
 
     /// <summary>
@@ -98,13 +84,9 @@ public static class PlayerUtil
     public static string GetPlayerPercentage(float num1, float num2)
     {
         if (num2 != 0)
-        {
             return $"{num1 / num2 * 100:0.00}%";
-        }
         else
-        {
             return "0%";
-        }
     }
 
     /// <summary>
@@ -115,15 +97,9 @@ public static class PlayerUtil
     public static string GetKillStar(int kills)
     {
         if (kills < 100)
-        {
             return "";
-        }
         else
-        {
-            int count = kills / 100;
-
-            return $"{count}";
-        }
+            return $"{kills / 100:0}";
     }
 
     /// <summary>
@@ -160,37 +136,6 @@ public static class PlayerUtil
     }
 
     /// <summary>
-    /// 获取玩家ID或队标
-    /// </summary>
-    /// <param name="originalName"></param>
-    /// <param name="isClan"></param>
-    /// <returns></returns>
-    public static string GetPlayerTargetName(string originalName, bool isClan)
-    {
-        if (string.IsNullOrEmpty(originalName))
-            return "";
-
-        int index = originalName.IndexOf("]");
-        string clan;
-        string name;
-        if (index != -1)
-        {
-            clan = originalName.Substring(1, index - 1);
-            name = originalName.Substring(index + 1);
-        }
-        else
-        {
-            clan = "";
-            name = originalName;
-        }
-
-        if (isClan)
-            return clan;
-        else
-            return name;
-    }
-
-    /// <summary>
     /// 小数类型的时间秒，转为分钟
     /// </summary>
     /// <param name="second"></param>
@@ -198,13 +143,9 @@ public static class PlayerUtil
     public static int SecondsToMinute(float second)
     {
         if (second >= 0 && second <= 36000)
-        {
             return (int)(second / 60);
-        }
         else
-        {
             return 0;
-        }
     }
 
     /// <summary>
@@ -229,9 +170,7 @@ public static class PlayerUtil
         {
             var index = Globals.LifePlayerCacheDatas.FindIndex(item => item.PersonaId == personaId);
             if (index != -1)
-            {
                 return Globals.LifePlayerCacheDatas[index].KD;
-            }
 
             return 0;
         }
@@ -248,9 +187,24 @@ public static class PlayerUtil
         {
             var index = Globals.LifePlayerCacheDatas.FindIndex(item => item.PersonaId == personaId);
             if (index != -1)
-            {
                 return Globals.LifePlayerCacheDatas[index].KPM;
-            }
+
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// 获取游玩时长
+    /// </summary>
+    /// <param name="personaId"></param>
+    /// <returns></returns>
+    public static int GetLifeTime(long personaId)
+    {
+        lock (Obj)
+        {
+            var index = Globals.LifePlayerCacheDatas.FindIndex(item => item.PersonaId == personaId);
+            if (index != -1)
+                return Globals.LifePlayerCacheDatas[index].Time;
 
             return 0;
         }

@@ -133,7 +133,7 @@ public partial class QueryRecordWindow
 
                 AddPlayerInfo($"最高连续击杀数 : {detailed.result.highestKillStreak}");
                 AddPlayerInfo($"最远爆头距离 : {detailed.result.longestHeadShot}");
-                AddPlayerInfo($"最佳兵种 : {ClientUtil.GetClassChs(detailed.result.favoriteClass)}");
+                AddPlayerInfo($"最佳兵种 : {ClientHelper.GetClassChs(detailed.result.favoriteClass)}");
 
                 AddPlayerInfo("");
 
@@ -185,7 +185,7 @@ public partial class QueryRecordWindow
                     weapons.Add(new()
                     {
                         name = ChsUtil.ToSimplified(wea.name),
-                        imageUrl = ClientUtil.GetTempImagePath(wea.imageUrl, "weapons2"),
+                        imageUrl = ClientHelper.GetTempImagePath(wea.imageUrl, "weapons2"),
                         star = PlayerUtil.GetKillStar((int)wea.stats.values.kills),
                         kills = (int)wea.stats.values.kills,
                         killsPerMinute = PlayerUtil.GetPlayerKPM(wea.stats.values.kills, wea.stats.values.seconds),
@@ -243,7 +243,7 @@ public partial class QueryRecordWindow
                     vehicles.Add(new()
                     {
                         name = ChsUtil.ToSimplified(veh.name),
-                        imageUrl = ClientUtil.GetTempImagePath(veh.imageUrl, "vehicles2"),
+                        imageUrl = ClientHelper.GetTempImagePath(veh.imageUrl, "vehicles2"),
                         star = PlayerUtil.GetKillStar((int)veh.stats.values.kills),
                         kills = (int)veh.stats.values.kills,
                         killsPerMinute = PlayerUtil.GetPlayerKPM(veh.stats.values.kills, veh.stats.values.seconds),

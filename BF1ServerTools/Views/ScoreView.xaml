@@ -388,6 +388,7 @@
                         <GridViewColumn DisplayMemberBinding="{Binding Score}" Header="得分" />
                         <GridViewColumn DisplayMemberBinding="{Binding LifeKd, StringFormat={}{0:0.00}}" Header="LKD" />
                         <GridViewColumn DisplayMemberBinding="{Binding LifeKpm, StringFormat={}{0:0.00}}" Header="LKPM" />
+                        <GridViewColumn DisplayMemberBinding="{Binding LifeTime}" Header="时长" />
                         <GridViewColumn Header="兵种">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -530,6 +531,7 @@
                         <GridViewColumn DisplayMemberBinding="{Binding Score}" Header="得分" />
                         <GridViewColumn DisplayMemberBinding="{Binding LifeKd, StringFormat={}{0:0.00}}" Header="LKD" />
                         <GridViewColumn DisplayMemberBinding="{Binding LifeKpm, StringFormat={}{0:0.00}}" Header="LKPM" />
+                        <GridViewColumn DisplayMemberBinding="{Binding LifeTime}" Header="时长" />
                         <GridViewColumn Header="兵种">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

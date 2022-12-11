@@ -83,6 +83,12 @@ public partial class PlayerDataModel : ObservableObject, IComparable<PlayerDataM
     private int dead;
 
     /// <summary>
+    /// 得分
+    /// </summary>
+    [ObservableProperty]
+    private int score;
+
+    /// <summary>
     /// KD
     /// </summary>
     [ObservableProperty]
@@ -107,10 +113,10 @@ public partial class PlayerDataModel : ObservableObject, IComparable<PlayerDataM
     private float lifeKpm;
 
     /// <summary>
-    /// 得分
+    /// 生涯时长
     /// </summary>
     [ObservableProperty]
-    private int score;
+    private int lifeTime;
 
     ///////////////////////////////////////////////////////////////////////
 

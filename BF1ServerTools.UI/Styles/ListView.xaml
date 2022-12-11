@@ -142,6 +142,10 @@
                     <TextBlock Text="玩家ID：" />
                     <TextBlock Text="{Binding Name}" />
                 </StackPanel>
+                <StackPanel Margin="5">
+                    <TextBlock Text="时长：" />
+                    <TextBlock Text="{Binding LifeTime}" />
+                </StackPanel>
             </StackPanel>
             <Border
                 Margin="5"
@@ -159,11 +163,11 @@
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                     <StackPanel Margin="5">
                         <TextBlock Text="KD2：" />
-                        <TextBlock Text="{Binding LifeKD, StringFormat={}{0:0.00}}" />
+                        <TextBlock Text="{Binding LifeKd, StringFormat={}{0:0.00}}" />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <TextBlock Text="KPM2：" />
-                        <TextBlock Text="{Binding LifeKPM, StringFormat={}{0:0.00}}" />
+                        <TextBlock Text="{Binding LifeKpm, StringFormat={}{0:0.00}}" />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <TextBlock Text="管理员：" />
@@ -205,11 +209,11 @@
                     </DockPanel>
                     <DockPanel>
                         <TextBlock Width="50" Text="KD：" />
-                        <TextBlock Text="{Binding KD, StringFormat={}{0:0.00}}" />
+                        <TextBlock Text="{Binding Kd, StringFormat={}{0:0.00}}" />
                     </DockPanel>
                     <DockPanel>
                         <TextBlock Width="50" Text="KPM：" />
-                        <TextBlock Text="{Binding KPM, StringFormat={}{0:0.00}}" />
+                        <TextBlock Text="{Binding Kpm, StringFormat={}{0:0.00}}" />
                     </DockPanel>
                     <DockPanel>
                         <TextBlock Width="50" Text="得分：" />

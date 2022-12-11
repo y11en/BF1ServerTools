@@ -126,7 +126,11 @@ public partial class ScoreView : UserControl
 
             foreach (var item in Player.GetPlayerList())
             {
-                item.SquadId2 = ClientUtil.GetSquadChsName(item.SquadId);
+                if (item.SquadId == 0)
+                    item.SquadId = 99;
+                item.SquadId2 = ClientHelper.GetSquadChsName(item.SquadId);
+
+                item.Kd = PlayerUtil.GetPlayerKD(item.Kill, item.Dead);
 
                 item.LifeKd = PlayerUtil.GetLifeKD(item.PersonaId);
                 item.LifeKpm = PlayerUtil.GetLifeKPM(item.PersonaId);
@@ -135,8 +139,8 @@ public partial class ScoreView : UserControl
                 item.Vip = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerVIPs_PID);
                 item.White = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.CustomWhites_PID);
 
-                item.Kit = ClientUtil.GetPlayerKitImage(item.WeaponS0, item.WeaponS2, item.WeaponS5);
-                item.Kit2 = ClientUtil.GetPlayerKitName(item.WeaponS0, item.WeaponS2, item.WeaponS5);
+                item.Kit = ClientHelper.GetPlayerKitImage(item.WeaponS0, item.WeaponS2, item.WeaponS5);
+                item.Kit2 = ClientHelper.GetPlayerKitName(item.WeaponS0, item.WeaponS2, item.WeaponS5);
 
                 switch (item.TeamId)
                 {
@@ -161,22 +165,16 @@ public partial class ScoreView : UserControl
             foreach (var item in PlayerList_Team1)
             {
                 // 统计当前服务器玩家数量
-                if (item.Rank != 0)
-                {
+                if (item.PersonaId != 0)
                     _serverInfo.Team1MaxPlayerCount++;
-                }
 
                 // 统计当前服务器存活玩家数量
                 if (item.WeaponS0 != "" || item.WeaponS7 != "")
-                {
                     _serverInfo.Team1PlayerCount++;
-                }
 
                 // 统计当前服务器150级玩家数量
                 if (item.Rank == 150)
-                {
                     _serverInfo.Team1Rank150PlayerCount++;
-                }
 
                 // 总击杀数统计
                 _serverInfo.Team1AllKillCount += item.Kill;
@@ -188,22 +186,16 @@ public partial class ScoreView : UserControl
             foreach (var item in PlayerList_Team2)
             {
                 // 统计当前服务器玩家数量
-                if (item.Rank != 0)
-                {
+                if (item.PersonaId != 0)
                     _serverInfo.Team2MaxPlayerCount++;
-                }
 
                 // 统计当前服务器存活玩家数量
                 if (item.WeaponS0 != "" || item.WeaponS7 != "")
-                {
                     _serverInfo.Team2PlayerCount++;
-                }
 
                 // 统计当前服务器150级玩家数量
                 if (item.Rank == 150)
-                {
                     _serverInfo.Team2Rank150PlayerCount++;
-                }
 
                 // 总击杀数统计
                 _serverInfo.Team2AllKillCount += item.Kill;
@@ -214,26 +206,27 @@ public partial class ScoreView : UserControl
             // 显示队伍1中文武器名称
             for (int i = 0; i < PlayerList_Team1.Count; i++)
             {
-                PlayerList_Team1[i].WeaponS0 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS0);
-                PlayerList_Team1[i].WeaponS1 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS1);
-                PlayerList_Team1[i].WeaponS2 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS2);
-                PlayerList_Team1[i].WeaponS3 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS3);
-                PlayerList_Team1[i].WeaponS4 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS4);
-                PlayerList_Team1[i].WeaponS5 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS5);
-                PlayerList_Team1[i].WeaponS6 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS6);
-                PlayerList_Team1[i].WeaponS7 = ClientUtil.GetWeaponChsName(PlayerList_Team1[i].WeaponS7);
+                PlayerList_Team1[i].WeaponS0 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS0);
+                PlayerList_Team1[i].WeaponS1 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS1);
+                PlayerList_Team1[i].WeaponS2 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS2);
+                PlayerList_Team1[i].WeaponS3 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS3);
+                PlayerList_Team1[i].WeaponS4 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS4);
+                PlayerList_Team1[i].WeaponS5 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS5);
+                PlayerList_Team1[i].WeaponS6 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS6);
+                PlayerList_Team1[i].WeaponS7 = ClientHelper.GetWeaponChsName(PlayerList_Team1[i].WeaponS7);
             }
+
             // 显示队伍2中文武器名称
             for (int i = 0; i < PlayerList_Team2.Count; i++)
             {
-                PlayerList_Team2[i].WeaponS0 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS0);
-                PlayerList_Team2[i].WeaponS1 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS1);
-                PlayerList_Team2[i].WeaponS2 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS2);
-                PlayerList_Team2[i].WeaponS3 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS3);
-                PlayerList_Team2[i].WeaponS4 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS4);
-                PlayerList_Team2[i].WeaponS5 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS5);
-                PlayerList_Team2[i].WeaponS6 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS6);
-                PlayerList_Team2[i].WeaponS7 = ClientUtil.GetWeaponChsName(PlayerList_Team2[i].WeaponS7);
+                PlayerList_Team2[i].WeaponS0 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS0);
+                PlayerList_Team2[i].WeaponS1 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS1);
+                PlayerList_Team2[i].WeaponS2 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS2);
+                PlayerList_Team2[i].WeaponS3 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS3);
+                PlayerList_Team2[i].WeaponS4 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS4);
+                PlayerList_Team2[i].WeaponS5 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS5);
+                PlayerList_Team2[i].WeaponS6 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS6);
+                PlayerList_Team2[i].WeaponS7 = ClientHelper.GetWeaponChsName(PlayerList_Team2[i].WeaponS7);
             }
 
             //////////////////////////////// 统计信息数据 ////////////////////////////////

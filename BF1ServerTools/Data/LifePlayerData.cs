@@ -5,8 +5,11 @@ public class LifePlayerData
     public DateTime Date { get; set; }
     public string Name { get; set; }
     public long PersonaId { get; set; }
+
     public float KD { get; set; }
     public float KPM { get; set; }
+    public int Time { get; set; }
+
     public bool IsWeaponOK { get; set; }
     public bool IsVehicleOK { get; set; }
 

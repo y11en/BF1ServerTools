@@ -3,7 +3,7 @@ using BF1ServerTools.RES.Data;
 
 namespace BF1ServerTools.RES;
 
-public static class ClientUtil
+public static class ClientHelper
 {
     /// <summary>
     /// 获取地图对应中文名称
@@ -154,6 +154,7 @@ public static class ClientUtil
         switch (squadID)
         {
             case 0:
+            case 99:
                 return "无";
             case 1:
                 return "苹果";
