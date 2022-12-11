@@ -84,6 +84,13 @@ public static class Globals
     /// 缓存玩家生涯数据
     /// </summary>
     public static List<LifePlayerData> LifePlayerCacheDatas = new();
+
+    ///////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 是否自动踢出违规玩家
+    /// </summary>
+    public static bool AutoKickBreakRulePlayer = false;
 }
 
 public enum OrderBy
@@ -99,6 +106,7 @@ public enum OrderBy
     KPM,
     LKD,
     LKPM,
+    LTime,
     Kit2,
     Weapon
 }

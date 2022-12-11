@@ -46,7 +46,7 @@ public partial class ScoreModel : ObservableObject
     /// 队伍1比分
     /// </summary>
     [ObservableProperty]
-    private string team1Score;
+    private int team1Score;
 
     /// <summary>
     /// 队伍1比分，图形宽度
@@ -114,7 +114,7 @@ public partial class ScoreModel : ObservableObject
     /// 队伍2比分
     /// </summary>
     [ObservableProperty]
-    private string team2Score;
+    private int team2Score;
 
     /// <summary>
     /// 队伍2比分，图形宽度

@@ -45,7 +45,9 @@
                                 Margin="5"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                Text="🔥" />
+                                FontWeight="Bold"
+                                Foreground="#4A9B2C"
+                                Text="|" />
                             <TextBlock
                                 Margin="5"
                                 VerticalAlignment="Center"
@@ -182,6 +184,7 @@
                             <ComboBoxItem Content="KPM" />
                             <ComboBoxItem Content="生涯KD" />
                             <ComboBoxItem Content="生涯KPM" />
+                            <ComboBoxItem Content="时长" />
                             <ComboBoxItem Content="兵种" />
                             <ComboBoxItem Content="主武器" />
                         </ComboBox>

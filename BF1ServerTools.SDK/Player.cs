@@ -43,6 +43,9 @@ public static class Player
             {
                 var _pVehicleEntityData = Memory.Read<long>(_pClientVehicleEntity + 0x30);
                 _weaponSlot[0] = Memory.ReadString(Memory.Read<long>(_pVehicleEntityData + 0x2F8), 64);
+
+                for (int j = 1; j < 8; j++)
+                    _weaponSlot[j] = "";
             }
             else
             {

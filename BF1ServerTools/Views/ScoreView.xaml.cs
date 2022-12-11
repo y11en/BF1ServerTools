@@ -8,6 +8,9 @@ using BF1ServerTools.Models;
 using BF1ServerTools.Helper;
 using BF1ServerTools.Windows;
 using BF1ServerTools.Extensions;
+using System.Reflection;
+using static BF1ServerTools.API.RespJson.FullServerDetails.Result;
+using BF1ServerTools.SDK.Core;
 
 namespace BF1ServerTools.Views;
 
@@ -30,9 +33,9 @@ public partial class ScoreView : UserControl
     private List<PlayerData> PlayerList_Team2 = new();
 
     /// <summary>
-    /// 当前服务器信息
+    /// 服务器数据
     /// </summary>
-    private ServerInfo _serverInfo = new();
+    private ServerData _serverData = new();
 
     ///////////////////////////////////////////////////////
 
@@ -88,7 +91,101 @@ public partial class ScoreView : UserControl
     {
         while (MainWindow.IsAppRunning)
         {
+            // 服务器名称
+            _serverData.Name = Server.GetServerName();
+            _serverData.Name = string.IsNullOrEmpty(_serverData.Name) ? "未知" : _serverData.Name;
 
+            // 服务器地图名称
+            _serverData.MapName = Server.GetMapName();
+            _serverData.MapName = string.IsNullOrEmpty(_serverData.MapName) ? "未知" : _serverData.MapName;
+
+            // 服务器游戏模式
+            _serverData.GameMode = Server.GetGameMode();
+
+            // 服务器时间
+            _serverData.Time = Server.GetServerTime();
+
+            //////////////////////////////// 服务器数据整理 ////////////////////////////////
+
+            ScoreModel.ServerName = _serverData.Name;
+            ScoreModel.ServerTime = PlayerUtil.SecondsToMMSS(_serverData.Time);
+
+            ScoreModel.ServerMapName = ClientHelper.GetMapChsName(_serverData.MapName);
+            ScoreModel.ServerMapImg = ClientHelper.GetMapPrevImage(_serverData.MapName);
+
+            if (_serverData.MapName == "未知" || ScoreModel.ServerMapName == "大厅菜单")
+                ScoreModel.ServerGameMode = "未知";
+            else
+                ScoreModel.ServerGameMode = ClientHelper.GetGameMode(_serverData.GameMode);
+
+            ScoreModel.Team1Img = ClientHelper.GetTeam1Image(_serverData.MapName);
+            ScoreModel.Team2Img = ClientHelper.GetTeam2Image(_serverData.MapName);
+
+            ScoreModel.Team1Name = ClientHelper.GetTeamChsName(_serverData.MapName, 1);
+            ScoreModel.Team2Name = ClientHelper.GetTeamChsName(_serverData.MapName, 2);
+
+            // 当服务器模式为征服时，下列数据才有效
+            if (ScoreModel.ServerGameMode == "征服")
+            {
+                // 最大比分
+                _serverData.MaxScore = Server.GetServerMaxScore();
+                // 队伍1、队伍2分数
+                _serverData.Team1Score = Server.GetTeam1Score();
+                _serverData.Team2Score = Server.GetTeam2Score();
+                // 队伍1、队伍2从击杀获取得分
+                _serverData.Team1Kill = Server.GetTeam1KillScore();
+                _serverData.Team2Kill = Server.GetTeam2KillScore();
+                // 队伍1、队伍2从旗帜获取得分
+                _serverData.Team1Flag = Server.GetTeam1FlagScore();
+                _serverData.Team2Flag = Server.GetTeam2FlagScore();
+
+                ///////////////////////////// 修正服务器得分数据 /////////////////////////////
+
+                _serverData.Team1Score = PlayerUtil.FixedServerScore(_serverData.Team1Score);
+                _serverData.Team2Score = PlayerUtil.FixedServerScore(_serverData.Team2Score);
+
+                if (_serverData.MaxScore != 0)
+                {
+                    var scale = _serverData.MaxScore / 1000.0f;
+                    ScoreModel.Team1ScoreWidth = PlayerUtil.FixedServerScore(_serverData.Team1Score / (8 * scale));
+                    ScoreModel.Team2ScoreWidth = PlayerUtil.FixedServerScore(_serverData.Team2Score / (8 * scale));
+                }
+                else
+                {
+                    ScoreModel.Team1ScoreWidth = 0;
+                    ScoreModel.Team2ScoreWidth = 0;
+                }
+
+                ScoreModel.Team1Score = _serverData.Team1Score;
+                ScoreModel.Team2Score = _serverData.Team2Score;
+
+                ScoreModel.Team1Flag = PlayerUtil.FixedServerScore(_serverData.Team1Flag);
+                ScoreModel.Team1Kill = PlayerUtil.FixedServerScore(_serverData.Team1Kill);
+
+                ScoreModel.Team2Flag = PlayerUtil.FixedServerScore(_serverData.Team2Flag);
+                ScoreModel.Team2Kill = PlayerUtil.FixedServerScore(_serverData.Team2Kill);
+            }
+
+            /////////////////////////////////////////////////////////////////////////
+
+            // 服务器数字Id
+            _serverData.GameId = Server.GetGameId();
+            ScoreModel.ServerGameId = _serverData.GameId;
+
+            // 如果玩家没有进入服务器，要进行一些数据清理
+            if (ScoreModel.ServerMapName == "大厅菜单")
+            {
+                Globals.GameId = 0;
+
+                Globals.ServerAdmins_PID.Clear();
+                Globals.ServerVIPs_PID.Clear();
+
+                Globals.AutoKickBreakRulePlayer = false;
+            }
+            else
+            {
+                Globals.GameId = _serverData.GameId;
+            }
 
             /////////////////////////////////////////////////////////////////////////
 
@@ -110,19 +207,21 @@ public partial class ScoreView : UserControl
             PlayerList_Team1.Clear();
             PlayerList_Team2.Clear();
 
-            _serverInfo.Team1MaxPlayerCount = 0;
-            _serverInfo.Team1PlayerCount = 0;
-            _serverInfo.Team1Rank150PlayerCount = 0;
-            _serverInfo.Team1AllKillCount = 0;
-            _serverInfo.Team1AllDeadCount = 0;
+            _serverData.Team1MaxPlayerCount = 0;
+            _serverData.Team1PlayerCount = 0;
+            _serverData.Team1Rank150PlayerCount = 0;
+            _serverData.Team1AllKillCount = 0;
+            _serverData.Team1AllDeadCount = 0;
 
-            _serverInfo.Team2MaxPlayerCount = 0;
-            _serverInfo.Team2PlayerCount = 0;
-            _serverInfo.Team2Rank150PlayerCount = 0;
-            _serverInfo.Team2AllKillCount = 0;
-            _serverInfo.Team2AllDeadCount = 0;
+            _serverData.Team2MaxPlayerCount = 0;
+            _serverData.Team2PlayerCount = 0;
+            _serverData.Team2Rank150PlayerCount = 0;
+            _serverData.Team2AllKillCount = 0;
+            _serverData.Team2AllDeadCount = 0;
 
             //////////////////////////////// 玩家数据 ////////////////////////////////
+
+            var time = PlayerUtil.SecondsToMinute(Server.GetServerTime());
 
             foreach (var item in Player.GetPlayerList())
             {
@@ -131,6 +230,7 @@ public partial class ScoreView : UserControl
                 item.SquadId2 = ClientHelper.GetSquadChsName(item.SquadId);
 
                 item.Kd = PlayerUtil.GetPlayerKD(item.Kill, item.Dead);
+                item.Kpm = PlayerUtil.GetPlayerKPM(item.Kill, time);
 
                 item.LifeKd = PlayerUtil.GetLifeKD(item.PersonaId);
                 item.LifeKpm = PlayerUtil.GetLifeKPM(item.PersonaId);
@@ -166,20 +266,20 @@ public partial class ScoreView : UserControl
             {
                 // 统计当前服务器玩家数量
                 if (item.PersonaId != 0)
-                    _serverInfo.Team1MaxPlayerCount++;
+                    _serverData.Team1MaxPlayerCount++;
 
                 // 统计当前服务器存活玩家数量
                 if (item.WeaponS0 != "" || item.WeaponS7 != "")
-                    _serverInfo.Team1PlayerCount++;
+                    _serverData.Team1PlayerCount++;
 
                 // 统计当前服务器150级玩家数量
                 if (item.Rank == 150)
-                    _serverInfo.Team1Rank150PlayerCount++;
+                    _serverData.Team1Rank150PlayerCount++;
 
                 // 总击杀数统计
-                _serverInfo.Team1AllKillCount += item.Kill;
+                _serverData.Team1AllKillCount += item.Kill;
                 // 总死亡数统计
-                _serverInfo.Team1AllDeadCount += item.Dead;
+                _serverData.Team1AllDeadCount += item.Dead;
             }
 
             // 队伍2数据统计
@@ -187,20 +287,20 @@ public partial class ScoreView : UserControl
             {
                 // 统计当前服务器玩家数量
                 if (item.PersonaId != 0)
-                    _serverInfo.Team2MaxPlayerCount++;
+                    _serverData.Team2MaxPlayerCount++;
 
                 // 统计当前服务器存活玩家数量
                 if (item.WeaponS0 != "" || item.WeaponS7 != "")
-                    _serverInfo.Team2PlayerCount++;
+                    _serverData.Team2PlayerCount++;
 
                 // 统计当前服务器150级玩家数量
                 if (item.Rank == 150)
-                    _serverInfo.Team2Rank150PlayerCount++;
+                    _serverData.Team2Rank150PlayerCount++;
 
                 // 总击杀数统计
-                _serverInfo.Team2AllKillCount += item.Kill;
+                _serverData.Team2AllKillCount += item.Kill;
                 // 总死亡数统计
-                _serverInfo.Team2AllDeadCount += item.Dead;
+                _serverData.Team2AllDeadCount += item.Dead;
             }
 
             // 显示队伍1中文武器名称
@@ -231,19 +331,19 @@ public partial class ScoreView : UserControl
 
             //////////////////////////////// 统计信息数据 ////////////////////////////////
 
-            ScoreModel.Team1PlayerCount = _serverInfo.Team1PlayerCount;
-            ScoreModel.Team1MaxPlayerCount = _serverInfo.Team1MaxPlayerCount;
-            ScoreModel.Team1Rank150PlayerCount = _serverInfo.Team1Rank150PlayerCount;
-            ScoreModel.Team1AllKillCount = _serverInfo.Team1AllKillCount;
-            ScoreModel.Team1AllDeadCount = _serverInfo.Team1AllDeadCount;
+            ScoreModel.Team1PlayerCount = _serverData.Team1PlayerCount;
+            ScoreModel.Team1MaxPlayerCount = _serverData.Team1MaxPlayerCount;
+            ScoreModel.Team1Rank150PlayerCount = _serverData.Team1Rank150PlayerCount;
+            ScoreModel.Team1AllKillCount = _serverData.Team1AllKillCount;
+            ScoreModel.Team1AllDeadCount = _serverData.Team1AllDeadCount;
 
-            ScoreModel.Team2PlayerCount = _serverInfo.Team2PlayerCount;
-            ScoreModel.Team2MaxPlayerCount = _serverInfo.Team2MaxPlayerCount;
-            ScoreModel.Team2Rank150PlayerCount = _serverInfo.Team2Rank150PlayerCount;
-            ScoreModel.Team2AllKillCount = _serverInfo.Team2AllKillCount;
-            ScoreModel.Team2AllDeadCount = _serverInfo.Team2AllDeadCount;
+            ScoreModel.Team2PlayerCount = _serverData.Team2PlayerCount;
+            ScoreModel.Team2MaxPlayerCount = _serverData.Team2MaxPlayerCount;
+            ScoreModel.Team2Rank150PlayerCount = _serverData.Team2Rank150PlayerCount;
+            ScoreModel.Team2AllKillCount = _serverData.Team2AllKillCount;
+            ScoreModel.Team2AllDeadCount = _serverData.Team2AllDeadCount;
 
-            ScoreModel.AllPlayerCount = _serverInfo.Team1MaxPlayerCount + _serverInfo.Team2MaxPlayerCount;
+            ScoreModel.AllPlayerCount = _serverData.Team1MaxPlayerCount + _serverData.Team2MaxPlayerCount;
 
             ////////////////////////////////////////////////////////////////////////////////
 

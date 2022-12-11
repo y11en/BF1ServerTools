@@ -208,6 +208,8 @@ public partial class PlayerDataModel : ObservableObject, IComparable<PlayerDataM
                 return other.lifeKd.CompareTo(this.lifeKd);
             case OrderBy.LKPM:
                 return other.lifeKpm.CompareTo(this.lifeKpm);
+            case OrderBy.LTime:
+                return other.lifeTime.CompareTo(this.lifeTime);
             case OrderBy.Kit2:
                 return other.kit2.CompareTo(this.kit2);
             case OrderBy.Weapon:

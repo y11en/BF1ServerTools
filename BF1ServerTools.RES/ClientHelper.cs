@@ -199,9 +199,8 @@ public static class ClientHelper
     {
         var index = MapData.AllMapInfo.FindIndex(var => var.English.Equals(mapName));
         if (index != -1 && mapName != "ID_M_LEVEL_MENU")
-        {
             return $"\\BF1ServerTools.RES;component\\Assets\\Images\\Teams\\{MapData.AllMapInfo[index].Team1Image}.png";
-        }
+
         return "\\BF1ServerTools.RES;component\\Assets\\Images\\Teams\\_DEF.png";
     }
 
@@ -213,9 +212,8 @@ public static class ClientHelper
     {
         var index = MapData.AllMapInfo.FindIndex(var => var.English.Equals(mapName));
         if (index != -1 && mapName != "ID_M_LEVEL_MENU")
-        {
             return $"\\BF1ServerTools.RES;component\\Assets\\Images\\Teams\\{MapData.AllMapInfo[index].Team2Image}.png";
-        }
+
         return "\\BF1ServerTools.RES;component\\Assets\\Images\\Teams\\_DEF.png";
     }
 

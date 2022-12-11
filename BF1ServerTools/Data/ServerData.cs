@@ -1,6 +1,6 @@
 ﻿namespace BF1ServerTools.Data;
 
-public class ServerInfo
+public class ServerData
 {
     public string Name { get; set; }
     public long GameId { get; set; }
