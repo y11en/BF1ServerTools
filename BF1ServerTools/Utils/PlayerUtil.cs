@@ -238,6 +238,12 @@ public static class PlayerUtil
     /// <returns></returns>
     public static bool CheckSId()
     {
+        if (Globals.GameId == 0)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "GameId为空，请先进入服务器");
+            return false;
+        }
+
         if (string.IsNullOrEmpty(Globals.SessionId))
         {
             NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
@@ -253,6 +259,12 @@ public static class PlayerUtil
     /// <returns></returns>
     public static bool CheckAuth()
     {
+        if (Globals.GameId == 0)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "GameId为空，请先进入服务器");
+            return false;
+        }
+
         if (string.IsNullOrEmpty(Globals.SessionId))
         {
             NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");
@@ -274,6 +286,12 @@ public static class PlayerUtil
     /// <returns></returns>
     public static bool CheckAuth2()
     {
+        if (Globals.GameId == 0)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "GameId为空，请先进入服务器");
+            return false;
+        }
+
         if (string.IsNullOrEmpty(Globals.SessionId))
         {
             NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId后，再执行本操作");

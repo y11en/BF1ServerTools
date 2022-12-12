@@ -410,7 +410,7 @@
                         Style="{StaticResource ListBoxStyle_CustomWhites}" />
                     <!--  ****************  -->
                     <StackPanel>
-                        <ui:UiLabelIcon Content="当前选中项" />
+                        <ui:UiLabelIcon Content="选中玩家" />
                         <TextBlock
                             Margin="5"
                             FontWeight="Bold"
