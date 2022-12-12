@@ -233,9 +233,9 @@ public partial class ScoreView : UserControl
                 item.LifeKpm = PlayerUtil.GetLifeKPM(item.PersonaId);
                 item.LifeTime = PlayerUtil.GetLifeTime(item.PersonaId);
 
-                item.Admin = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerAdmins_PID);
-                item.Vip = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerVIPs_PID);
-                item.White = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.CustomWhites_PID);
+                item.Admin = PlayerUtil.IsAdminVIP(item.PersonaId, Globals.ServerAdmins_PID);
+                item.Vip = PlayerUtil.IsAdminVIP(item.PersonaId, Globals.ServerVIPs_PID);
+                item.White = PlayerUtil.IsWhite(item.Name, Globals.CustomWhites_Name);
 
                 item.Kit = ClientHelper.GetPlayerKitImage(item.WeaponS0, item.WeaponS2, item.WeaponS5);
                 item.Kit2 = ClientHelper.GetPlayerKitName(item.WeaponS0, item.WeaponS2, item.WeaponS5);

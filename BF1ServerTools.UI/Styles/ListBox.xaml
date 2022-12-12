@@ -474,7 +474,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ListBoxStyle_ListInfo" TargetType="{x:Type ListBox}">
+    <Style x:Key="ListBoxStyle_CustomWhites" TargetType="{x:Type ListBox}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -483,9 +483,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <StackPanel IsItemsHost="true" />
-                    </ScrollViewer>
+                    <Border BorderBrush="#808080" BorderThickness="1">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <StackPanel IsItemsHost="true" />
+                        </ScrollViewer>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -499,45 +501,27 @@
                     <Setter Property="VirtualizingPanel.ScrollUnit" Value="Item" />
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Grid Margin="1" Background="Transparent">
-                                    <Border Name="border" BorderThickness="0" />
-                                    <ContentPresenter />
-                                </Grid>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border
+                                    Name="border"
+                                    Height="30"
+                                    Padding="10,0,10,0"
+                                    Background="Transparent">
+                                    <ContentPresenter VerticalAlignment="Center" />
+                                </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#EEEEEE" />
+                                        <Setter TargetName="border" Property="Background" Value="#CCCCCC" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="#1E88E5" />
-                                        <Setter Property="Foreground" Value="White" />
+                                        <Setter TargetName="border" Property="Background" Value="#808080" />
+                                        <Setter Property="TextElement.Foreground" Value="White" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Border
-                        Height="50"
-                        BorderBrush="Gray"
-                        BorderThickness="0,0,0,1">
-                        <StackPanel Margin="10,0,10,0" VerticalAlignment="Center">
-                            <TextBlock
-                                Margin="0,0,0,3"
-                                VerticalAlignment="Bottom"
-                                FontSize="14"
-                                FontWeight="Bold"
-                                Text="{Binding DisplayName}" />
-                            <TextBlock VerticalAlignment="Top" Text="{Binding PersonaId}" />
-                        </StackPanel>
-
-                    </Border>
-                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>

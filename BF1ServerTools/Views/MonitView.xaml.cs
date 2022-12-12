@@ -290,13 +290,13 @@ public partial class MonitView : UserControl
                 item.LifeKd = PlayerUtil.GetLifeKD(item.PersonaId);
                 item.LifeKpm = PlayerUtil.GetLifeKPM(item.PersonaId);
 
-                item.Admin = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerAdmins_PID);
-                item.White = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.CustomWhites_PID);
+                item.Admin = PlayerUtil.IsAdminVIP(item.PersonaId, Globals.ServerAdmins_PID);
+                item.White = PlayerUtil.IsWhite(item.Name, Globals.CustomWhites_Name);
 
                 // 黑名单
-                for (int i = 0; i < Globals.CustomBlacks_PID.Count; i++)
+                for (int i = 0; i < Globals.CustomBlacks_Name.Count; i++)
                 {
-                    if (item.PersonaId == Globals.CustomBlacks_PID[i])
+                    if (item.Name == Globals.CustomBlacks_Name[i])
                     {
                         AddBreakRulePlayerInfo(item, BreakType.Black, "Server Black List");
                     }

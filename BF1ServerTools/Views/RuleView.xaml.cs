@@ -168,15 +168,15 @@ public partial class RuleView : UserControl
             rule.Team2Rule.LifeMaxVehicleStar = RuleTeam2Model.LifeMaxVehicleStar;
 
             rule.WhiteList.Clear();
-            foreach (ListInfo item in ListBox_CustomWhites.Items)
+            foreach (string name in ListBox_CustomWhites.Items)
             {
-                rule.WhiteList.Add(item);
+                rule.WhiteList.Add(name);
             }
 
             rule.BlackList.Clear();
-            foreach (ListInfo item in ListBox_CustomBlacks.Items)
+            foreach (string name in ListBox_CustomBlacks.Items)
             {
-                rule.BlackList.Add(item);
+                rule.BlackList.Add(name);
             }
 
             rule.Team1Weapon.Clear();
@@ -427,23 +427,19 @@ public partial class RuleView : UserControl
         }
 
         // 清空白名单列表
-        Globals.CustomWhites_PID.Clear();
         Globals.CustomWhites_Name.Clear();
         // 添加自定义白名单列表
-        foreach (ListInfo item in ListBox_CustomWhites.Items)
+        foreach (string name in ListBox_CustomWhites.Items)
         {
-            Globals.CustomWhites_PID.Add(item.PersonaId);
-            Globals.CustomWhites_Name.Add(item.DisplayName);
+            Globals.CustomWhites_Name.Add(name);
         }
 
         // 清空黑名单列表
-        Globals.CustomBlacks_PID.Clear();
         Globals.CustomBlacks_Name.Clear();
         // 添加自定义黑名单列表
-        foreach (ListInfo item in ListBox_CustomBlacks.Items)
+        foreach (string name in ListBox_CustomBlacks.Items)
         {
-            Globals.CustomBlacks_PID.Add(item.PersonaId);
-            Globals.CustomBlacks_Name.Add(item.DisplayName);
+            Globals.CustomBlacks_Name.Add(name);
         }
 
         Globals.SetRuleIsOK = true;
@@ -531,11 +527,11 @@ public partial class RuleView : UserControl
     /// <param name="e"></param>
     private void Button_RemoveSelectedWhite_Click(object sender, RoutedEventArgs e)
     {
-        if (ListBox_CustomWhites.SelectedItem is ListInfo item)
+        if (ListBox_CustomWhites.SelectedItem is string name)
         {
-            ListBox_CustomWhites.Items.Remove(item);
+            ListBox_CustomWhites.Items.Remove(name);
 
-            NotifierHelper.Show(NotifierType.Success, $"从白名单列表移除玩家（{item.DisplayName}）成功");
+            NotifierHelper.Show(NotifierType.Success, $"从白名单列表移除玩家 {name} 成功");
         }
     }
 
@@ -544,14 +540,8 @@ public partial class RuleView : UserControl
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void Button_AddNewWhite_Click(object sender, RoutedEventArgs e)
+    private void Button_AddNewWhite_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(Globals.SessionId))
-        {
-            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId");
-            return;
-        }
-
         var name = TextBox_NewWhiteName.Text.Trim();
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -559,38 +549,10 @@ public partial class RuleView : UserControl
             return;
         }
 
-        Button_AddNewWhite.IsEnabled = false;
+        ListBox_CustomWhites.Items.Add(name);
+        TextBox_NewWhiteName.Clear();
 
-        NotifierHelper.Show(NotifierType.Notification, $"正在添加玩家 {name} 到白名单列表中...");
-
-        var result = await EA2API.GetPlayerPersonaId(Globals.AccessToken, name);
-        if (result.IsSuccess)
-        {
-            var jNode = JsonNode.Parse(result.Content);
-            if (jNode["personas"]!["persona"] != null)
-            {
-                var personaId = jNode["personas"]!["persona"][0]["personaId"].GetValue<long>();
-
-                ListBox_CustomWhites.Items.Add(new ListInfo()
-                {
-                    DisplayName = name,
-                    PersonaId = personaId,
-                });
-
-                TextBox_NewWhiteName.Clear();
-                NotifierHelper.Show(NotifierType.Success, $"添加玩家 {name} 到白名单列表成功");
-            }
-            else
-            {
-                NotifierHelper.Show(NotifierType.Warning, $"玩家 {name} 不存在");
-            }
-        }
-        else
-        {
-            NotifierHelper.Show(NotifierType.Error, $"发生了未知的异常\n{result.Content}");
-        }
-
-        Button_AddNewWhite.IsEnabled = true;
+        NotifierHelper.Show(NotifierType.Success, $"添加玩家 {name} 到白名单列表成功");
     }
 
     /// <summary>
@@ -600,11 +562,11 @@ public partial class RuleView : UserControl
     /// <param name="e"></param>
     private void Button_RemoveSelectedBlack_Click(object sender, RoutedEventArgs e)
     {
-        if (ListBox_CustomBlacks.SelectedItem is ListInfo item)
+        if (ListBox_CustomBlacks.SelectedItem is string name)
         {
-            ListBox_CustomBlacks.Items.Remove(item);
+            ListBox_CustomBlacks.Items.Remove(name);
 
-            NotifierHelper.Show(NotifierType.Success, $"从黑名单列表移除玩家（{item.DisplayName}）成功");
+            NotifierHelper.Show(NotifierType.Success, $"从黑名单列表移除玩家 {name} 成功");
         }
     }
 
@@ -613,14 +575,8 @@ public partial class RuleView : UserControl
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void Button_AddNewBlack_Click(object sender, RoutedEventArgs e)
+    private void Button_AddNewBlack_Click(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(Globals.SessionId))
-        {
-            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId");
-            return;
-        }
-
         var name = TextBox_NewBlackName.Text.Trim();
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -628,37 +584,9 @@ public partial class RuleView : UserControl
             return;
         }
 
-        Button_AddNewBlack.IsEnabled = false;
+        ListBox_CustomBlacks.Items.Add(name);
+        TextBox_NewBlackName.Clear();
 
-        NotifierHelper.Show(NotifierType.Notification, $"正在添加玩家 {name} 到黑名单列表中...");
-
-        var result = await EA2API.GetPlayerPersonaId(Globals.AccessToken, name);
-        if (result.IsSuccess)
-        {
-            var jNode = JsonNode.Parse(result.Content);
-            if (jNode["personas"]!["persona"] != null)
-            {
-                var personaId = jNode["personas"]!["persona"][0]["personaId"].GetValue<long>();
-
-                ListBox_CustomBlacks.Items.Add(new ListInfo()
-                {
-                    DisplayName = name,
-                    PersonaId = personaId,
-                });
-
-                TextBox_NewBlackName.Clear();
-                NotifierHelper.Show(NotifierType.Success, $"添加玩家 {name} 到黑名单列表成功");
-            }
-            else
-            {
-                NotifierHelper.Show(NotifierType.Warning, $"玩家 {name} 不存在");
-            }
-        }
-        else
-        {
-            NotifierHelper.Show(NotifierType.Error, $"发生了未知的异常\n{result.Content}");
-        }
-
-        Button_AddNewBlack.IsEnabled = true;
+        NotifierHelper.Show(NotifierType.Success, $"添加玩家 {name} 到黑名单列表成功");
     }
 }

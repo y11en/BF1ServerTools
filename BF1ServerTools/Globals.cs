@@ -181,13 +181,10 @@ public static class Globals
     /// <summary>
     /// 自定义白名单玩家列表
     /// </summary>
-    public static List<long> CustomWhites_PID = new();
+    public static List<string> CustomWhites_Name = new();
     /// <summary>
     /// 自定义黑名单玩家列表
     /// </summary>
-    public static List<long> CustomBlacks_PID = new();
-
-    public static List<string> CustomWhites_Name = new();
     public static List<string> CustomBlacks_Name = new();
 
     ///////////////////////////////////////////////////////

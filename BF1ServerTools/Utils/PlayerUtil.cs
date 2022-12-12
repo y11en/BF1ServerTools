@@ -160,14 +160,25 @@ public static class PlayerUtil
     }
 
     /// <summary>
-    /// 判断玩家是不是管理员、VIP或白名单
+    /// 判断玩家是不是管理员、VIP
     /// </summary>
     /// <param name="personaId"></param>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static bool IsAdminVIPWhite(long personaId, List<long> list)
+    public static bool IsAdminVIP(long personaId, List<long> list)
     {
         return list.IndexOf(personaId) != -1;
+    }
+
+    /// <summary>
+    /// 判断玩家是不是白名单
+    /// </summary>
+    /// <param name="personaId"></param>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    public static bool IsWhite(string name, List<string> list)
+    {
+        return list.IndexOf(name) != -1;
     }
 
     /// <summary>

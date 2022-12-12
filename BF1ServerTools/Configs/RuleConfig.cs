@@ -1,6 +1,4 @@
-﻿using BF1ServerTools.Data;
-
-namespace BF1ServerTools.Configs;
+﻿namespace BF1ServerTools.Configs;
 
 public class RuleConfig
 {
@@ -22,8 +20,8 @@ public class RuleConfig
         public Rule Team2Rule { get; set; }
         public List<string> Team1Weapon { get; set; }
         public List<string> Team2Weapon { get; set; }
-        public List<ListInfo> BlackList { get; set; }
-        public List<ListInfo> WhiteList { get; set; }
+        public List<string> BlackList { get; set; }
+        public List<string> WhiteList { get; set; }
         public class Rule
         {
             public int MaxKill { get; set; }
