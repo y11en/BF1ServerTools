@@ -36,64 +36,58 @@
             </StackPanel>
             <!--  **************************************  -->
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="{Binding MainModel.DisplayName2, FallbackValue='玩家昵称'}" TextAlignment="Right" />
-                    <TextBlock
-                        Margin="0,3,0,0"
-                        FontSize="10"
-                        Text="{Binding MainModel.PersonaId2, FallbackValue='玩家数字Id'}"
-                        TextAlignment="Right" />
-                </StackPanel>
                 <Border
-                    Height="30"
-                    Margin="5,0,5,0"
-                    VerticalAlignment="Center"
-                    BorderBrush="#008000">
+                    Margin="0,0,5,0"
+                    Padding="5,1,5,1"
+                    VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
+                            <Setter Property="BorderBrush" Value="#008000" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding MainModel.IsUseMode1}" Value="False">
-                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="BorderThickness" Value="1,1,5,1" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock
-                        Padding="3"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="2" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="12"
+                            Text="{Binding MainModel.DisplayName2, FallbackValue='玩家昵称'}"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            FontSize="10"
+                            Text="{Binding MainModel.PersonaId2, FallbackValue='玩家数字Id'}"
+                            TextAlignment="Right" />
+                    </StackPanel>
                 </Border>
                 <!--  #####################  -->
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="{Binding MainModel.DisplayName1, FallbackValue='玩家昵称'}" TextAlignment="Right" />
-                    <TextBlock
-                        Margin="0,3,0,0"
-                        FontSize="10"
-                        Text="{Binding MainModel.PersonaId1, FallbackValue='玩家数字Id'}"
-                        TextAlignment="Right" />
-                </StackPanel>
                 <Border
-                    Height="30"
-                    Margin="5,0,5,0"
-                    VerticalAlignment="Center"
-                    BorderBrush="#1E88E5">
+                    Margin="0,0,5,0"
+                    Padding="5,1,5,1"
+                    VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
+                            <Setter Property="BorderBrush" Value="#1E88E5" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding MainModel.IsUseMode1}" Value="True">
-                                    <Setter Property="BorderThickness" Value="2" />
+                                    <Setter Property="BorderThickness" Value="1,1,5,1" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock
-                        Padding="3"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="1" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="12"
+                            Text="{Binding MainModel.DisplayName1, FallbackValue='玩家昵称'}"
+                            TextAlignment="Right" />
+                        <TextBlock
+                            FontSize="10"
+                            Text="{Binding MainModel.PersonaId1, FallbackValue='玩家数字Id'}"
+                            TextAlignment="Right" />
+                    </StackPanel>
                 </Border>
                 <!--  #####################  -->
                 <StackPanel Margin="5,0,5,0" VerticalAlignment="Center">

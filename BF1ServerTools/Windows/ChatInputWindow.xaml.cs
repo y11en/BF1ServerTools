@@ -1,5 +1,6 @@
 ﻿using BF1ServerTools.SDK;
 using BF1ServerTools.SDK.Core;
+using BF1ServerTools.Utils;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -196,7 +197,7 @@ public partial class ChatInputWindow : Window
 
         //////////////////////////////////////////////////////
 
-        Chat.SendChsToBF1Chat(message);
+        Chat.SendChsToBF1Chat(ChsUtil.ToTraditional(message));
     }
 
     /// <summary>

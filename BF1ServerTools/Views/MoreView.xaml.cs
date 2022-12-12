@@ -16,6 +16,7 @@ public partial class MoreView : UserControl
     public List<MenuBar> MenuBars { get; set; } = new();
 
     private readonly ServerView ServerView = new();
+    private readonly QueryView QueryView = new();
     private readonly CacheView CacheView = new();
     private readonly SQLiteView SQLiteView = new();
 
@@ -44,6 +45,7 @@ public partial class MoreView : UserControl
     private void CreateMenuBar()
     {
         MenuBars.Add(new MenuBar() { Icon = "\xe968", Title = "服务器", NameSpace = "ServerView" });
+        MenuBars.Add(new MenuBar() { Icon = "\xe968", Title = "玩家数据", NameSpace = "QueryView" });
         MenuBars.Add(new MenuBar() { Icon = "\xe968", Title = "生涯缓存", NameSpace = "CacheView" });
         MenuBars.Add(new MenuBar() { Icon = "\xe968", Title = "历史日志", NameSpace = "SQLiteView" });
 
@@ -64,6 +66,9 @@ public partial class MoreView : UserControl
         {
             case "ServerView":
                 ContentControl_Main.Content = ServerView;
+                break;
+            case "QueryView":
+                ContentControl_Main.Content = QueryView;
                 break;
             case "CacheView":
                 ContentControl_Main.Content = CacheView;

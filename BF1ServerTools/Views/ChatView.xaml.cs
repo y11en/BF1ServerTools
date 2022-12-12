@@ -1,4 +1,5 @@
-﻿using BF1ServerTools.SDK;
+﻿using BF1ServerTools.API;
+using BF1ServerTools.SDK;
 using BF1ServerTools.SDK.Core;
 using BF1ServerTools.Data;
 using BF1ServerTools.Utils;
@@ -6,7 +7,6 @@ using BF1ServerTools.Helper;
 using BF1ServerTools.Models;
 using BF1ServerTools.Configs;
 using BF1ServerTools.Windows;
-using BF1ServerTools.API;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -391,7 +391,7 @@ public partial class ChatView : UserControl
         Memory.KeyPress(WinVK.J, ChatModel.KeyPressDelay);
         Thread.Sleep(ChatModel.KeyPressDelay);
 
-        Chat.SendChsToBF1Chat(message);
+        Chat.SendChsToBF1Chat(ChsUtil.ToTraditional(message));
     }
 
     /// <summary>
