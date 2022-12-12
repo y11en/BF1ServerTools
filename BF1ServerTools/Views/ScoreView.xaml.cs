@@ -741,11 +741,11 @@ public partial class ScoreView : UserControl
     #region 队伍1 右键菜单事件
     private void MenuItem_Team1_KickPlayerCustom_Click(object sender, RoutedEventArgs e)
     {
+        if (!PlayerUtil.CheckAuth())
+            return;
+
         if (ListView_Team1.SelectedItem is PlayerDataModel item)
         {
-            if (!PlayerUtil.CheckAuth())
-                return;
-
             var customKickWindow = new CustomKickWindow(item.Rank, item.Name, item.PersonaId)
             {
                 Owner = MainWindow.MainWindowInstance

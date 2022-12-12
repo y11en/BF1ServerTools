@@ -25,6 +25,40 @@ public static class Player
     }
 
     /// <summary>
+    /// 获取玩家列表缓存
+    /// </summary>
+    /// <returns></returns>
+    public static List<CacheData> GetPlayerCache()
+    {
+        List<CacheData> _playerCache = new();
+
+        for (int i = 0; i < MaxPlayer; i++)
+        {
+            var _baseAddress = Obfuscation.GetPlayerById(i);
+            if (!Memory.IsValid(_baseAddress))
+                continue;
+
+            var _personaId = Memory.Read<long>(_baseAddress + 0x38);
+            if (_personaId == 0)
+                continue;
+
+            var _name = Memory.ReadString(_baseAddress + 0x40, 64);
+            var _teamId = Memory.Read<int>(_baseAddress + 0x1C34);
+            var _spectator = Memory.Read<byte>(_baseAddress + 0x1C31);
+
+            _playerCache.Add(new()
+            {
+                TeamId = _teamId,
+                Name = _name,
+                Spectator = _spectator,
+                PersonaId = _personaId
+            });
+        }
+
+        return _playerCache;
+    }
+
+    /// <summary>
     /// 获取玩家列表信息
     /// </summary>
     /// <returns></returns>

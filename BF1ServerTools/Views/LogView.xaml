@@ -19,26 +19,23 @@
             <TextBlock
                 Margin="0,5,0,0"
                 Style="{StaticResource TextBlockStyle_Title}"
-                Text="📇 手动操作" />
+                Text="手动操作" />
             <TextBlock
                 Margin="0,5,0,0"
                 Style="{StaticResource TextBlockStyle_Title}"
-                Text="✔️ 踢出成功" />
+                Text="踢出成功" />
             <TextBlock
                 Margin="0,5,0,0"
                 Style="{StaticResource TextBlockStyle_Title}"
-                Text="❌ 踢出失败" />
+                Text="踢出失败" />
             <TextBlock
                 Margin="0,5,0,0"
                 Style="{StaticResource TextBlockStyle_Title}"
-                Text="♻️ 换边记录" />
+                Text="换边记录" />
         </UniformGrid>
         <!--  ******************  -->
         <UniformGrid Grid.Row="1" Columns="4">
-            <TextBox
-                x:Name="TextBox_ScoreKickLog"
-                Margin="0,5,2,0"
-                Style="{StaticResource TextBoxStyle_Logger}">
+            <TextBox x:Name="TextBox_ScoreKickLog" Style="{StaticResource TextBoxStyle_Logger}">
                 <TextBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem
@@ -51,7 +48,7 @@
             </TextBox>
             <TextBox
                 x:Name="TextBox_KickOKLog"
-                Margin="2,5,2,0"
+                Margin="0,5,5,5"
                 Foreground="Green"
                 Style="{StaticResource TextBoxStyle_Logger}">
                 <TextBox.ContextMenu>
@@ -66,7 +63,7 @@
             </TextBox>
             <TextBox
                 x:Name="TextBox_KickNOLog"
-                Margin="2,5,2,0"
+                Margin="0,5,5,5"
                 Foreground="Red"
                 Style="{StaticResource TextBoxStyle_Logger}">
                 <TextBox.ContextMenu>
@@ -81,7 +78,7 @@
             </TextBox>
             <TextBox
                 x:Name="TextBox_ChangeTeamLog"
-                Margin="2,5,0,0"
+                Margin="0,5,5,5"
                 Style="{StaticResource TextBoxStyle_Logger}">
                 <TextBox.ContextMenu>
                     <ContextMenu>

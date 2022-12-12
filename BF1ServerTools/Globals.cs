@@ -146,6 +146,13 @@ public static class Globals
     /// </summary>
     public static List<long> ServerVIPs_PID = new();
 
+    ///////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 保存违规玩家列表信息
+    /// </summary>
+    public static List<BreakRuleInfo> BreakRuleInfo_PlayerList = new();
+
     /// <summary>
     /// 缓存玩家生涯数据
     /// </summary>
@@ -194,6 +201,11 @@ public static class Globals
     /// 是否自动踢出违规玩家
     /// </summary>
     public static bool AutoKickBreakRulePlayer = false;
+
+    /// <summary>
+    /// 是否自动踢出观战玩家
+    /// </summary>
+    public static bool IsAutoKickSpectator = false;
 
     ///////////////////////////////////////////////////////
 

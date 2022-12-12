@@ -19,6 +19,7 @@
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListBox.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListView.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListView2.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/DataGrid.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/DataGrid2.xaml" />
 
