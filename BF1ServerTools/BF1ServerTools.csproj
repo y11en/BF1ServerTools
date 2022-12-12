@@ -22,7 +22,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Files\config.yml" />
+    <EmbeddedResource Include="Files\go-cqhttp.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BF1ServerTools.API\BF1ServerTools.API.csproj" />
+    <ProjectReference Include="..\BF1ServerTools.QQ\BF1ServerTools.QQ.csproj" />
     <ProjectReference Include="..\BF1ServerTools.RES\BF1ServerTools.RES.csproj" />
     <ProjectReference Include="..\BF1ServerTools.SDK\BF1ServerTools.SDK.csproj" />
     <ProjectReference Include="..\BF1ServerTools.UI\BF1ServerTools.UI.csproj" />
@@ -50,6 +56,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1462.37" />
     <PackageReference Include="NLog" Version="5.1.0" />
     <PackageReference Include="Notification.Wpf" Version="6.1.0.5" />
+    <PackageReference Include="Websocket.Client" Version="4.4.43" />
   </ItemGroup>
 
 </Project>

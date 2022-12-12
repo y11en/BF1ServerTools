@@ -20,7 +20,8 @@ public static class Player
         return new LocalData()
         {
             DisplayName = Memory.ReadString(_baseAddress + 0x40, 64),
-            PersonaId = Memory.Read<long>(_baseAddress + 0x38)
+            PersonaId = Memory.Read<long>(_baseAddress + 0x38),
+            FullName = Memory.ReadString(_baseAddress + 0x2156, 64)
         };
     }
 
