@@ -326,22 +326,41 @@
         <!--  **************************  -->
         <DockPanel Grid.Column="1">
             <ui:UiLabelIcon Content="操作" DockPanel.Dock="Top" />
-            <Button
-                x:Name="Button_RefreshFullServerDetails"
-                Click="Button_RefreshFullServerDetails_Click"
-                Content="刷新当前服务器详情"
-                DockPanel.Dock="Top">
-                <Button.Style>
-                    <Style BasedOn="{StaticResource ButtonStyle_Base}" TargetType="{x:Type Button}">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding DetailModel.ServerGameId, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+            <DockPanel DockPanel.Dock="Top">
+                <Button
+                    x:Name="Button_LeaveCurrentGame"
+                    Margin="0,5,5,5"
+                    Click="Button_LeaveCurrentGame_Click"
+                    Content="离开服务器"
+                    DockPanel.Dock="Right">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ButtonStyle_Base}" TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DetailModel.ServerGameId, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button
+                    x:Name="Button_RefreshFullServerDetails"
+                    Click="Button_RefreshFullServerDetails_Click"
+                    Content="刷新当前服务器详情"
+                    DockPanel.Dock="Left">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ButtonStyle_Base}" TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DetailModel.ServerGameId, Converter={StaticResource IsNullOrEmptyConverter}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </DockPanel>
             <!--  **************************  -->
             <ui:UiLabelIcon Content="服务器信息" DockPanel.Dock="Top" />
             <StackPanel DockPanel.Dock="Bottom">

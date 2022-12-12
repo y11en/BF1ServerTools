@@ -15,9 +15,12 @@
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/CheckBox.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/RichTextBox.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Slider.xaml" />
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListBox.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListView.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/DataGrid.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/DataGrid2.xaml" />
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/LabelIcon.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/RadioButtonIcon.xaml" />

@@ -7,6 +7,7 @@ using BF1ServerTools.Utils;
 using BF1ServerTools.Models;
 using BF1ServerTools.Helper;
 using BF1ServerTools.Windows;
+using NStandard;
 
 namespace BF1ServerTools.Views;
 
@@ -796,5 +797,33 @@ public partial class DetailView : UserControl
                 Button_RefreshFullServerDetails.Content = "刷新当前服务器详情";
             });
         });
+    }
+
+    /// <summary>
+    /// 离开当前服务器
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void Button_LeaveCurrentGame_Click(object sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(Globals.SessionId1))
+        {
+            NotifierHelper.Show(NotifierType.Warning, "请先获取玩家SessionId");
+            return;
+        }
+
+        if (Globals.GameId == 0)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "请先进入服务器获取GameID");
+            return;
+        }
+
+        NotifierHelper.Show(NotifierType.Information, $"正在离开服务器 {Globals.GameId} 中...");
+
+        var result = await BF1API.LeaveGame(Globals.SessionId1, Globals.GameId);
+        if (result.IsSuccess)
+            NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  离开服务器 {Globals.GameId} 成功");
+        else
+            NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  离开服务器 {Globals.GameId} 失败\n{result.Content}");
     }
 }

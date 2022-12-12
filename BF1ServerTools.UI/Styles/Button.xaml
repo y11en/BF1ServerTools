@@ -4,7 +4,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Margin" Value="3" />
+        <Setter Property="Margin" Value="5" />
         <Setter Property="Padding" Value="7" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="Background" Value="#1E88E5" />

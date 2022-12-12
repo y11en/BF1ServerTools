@@ -147,6 +147,31 @@ public static class Globals
     public static List<long> ServerVIPs_PID = new();
 
     /// <summary>
+    /// 缓存玩家生涯数据
+    /// </summary>
+    public static List<LifePlayerData> LifePlayerCacheDatas = new();
+
+    ///////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 服务器规则 队伍1
+    /// </summary>
+    public static ServerRule ServerRule_Team1 = new();
+    /// <summary>
+    /// 服务器规则 队伍2
+    /// </summary>
+    public static ServerRule ServerRule_Team2 = new();
+
+    /// <summary>
+    /// 保存队伍1限制武器名称列表
+    /// </summary>
+    public static List<string> CustomWeapons_Team1 = new();
+    /// <summary>
+    /// 保存队伍2限制武器名称列表
+    /// </summary>
+    public static List<string> CustomWeapons_Team2 = new();
+
+    /// <summary>
     /// 自定义白名单玩家列表
     /// </summary>
     public static List<long> CustomWhites_PID = new();
@@ -158,17 +183,29 @@ public static class Globals
     public static List<string> CustomWhites_Name = new();
     public static List<string> CustomBlacks_Name = new();
 
-    /// <summary>
-    /// 缓存玩家生涯数据
-    /// </summary>
-    public static List<LifePlayerData> LifePlayerCacheDatas = new();
-
     ///////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 是否设置规则正确
+    /// </summary>
+    public static bool SetRuleIsOK = false;
 
     /// <summary>
     /// 是否自动踢出违规玩家
     /// </summary>
     public static bool AutoKickBreakRulePlayer = false;
+
+    ///////////////////////////////////////////////////////
+
+    public static bool WhiteLifeKD = true;
+    public static bool WhiteLifeKPM = true;
+    public static bool WhiteLifeWeaponStar = true;
+    public static bool WhiteLifeVehicleStar = true;
+    public static bool WhiteKill = true;
+    public static bool WhiteKD = true;
+    public static bool WhiteKPM = true;
+    public static bool WhiteRank = true;
+    public static bool WhiteWeapon = true;
 }
 
 public enum OrderBy
