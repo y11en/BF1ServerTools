@@ -153,7 +153,7 @@ public partial class DetailView : UserControl
     /// </summary>
     private async Task<bool> GetFullServerDetails()
     {
-        if (string.IsNullOrEmpty(Globals.SessionId))
+        if (string.IsNullOrEmpty(Globals.SessionId1))
             return false;
 
         DetailModel.ServerName = "获取中...";

@@ -32,14 +32,10 @@
                         Margin="5"
                         Style="{StaticResource ListBoxStyle_Admin}" />
                     <StackPanel>
-                        <ui:UiLabelIcon Content="当前选中项" />
-                        <TextBlock
-                            Margin="5"
-                            FontWeight="Bold"
-                            Text="玩家头像" />
+                        <ui:UiLabelIcon Content="选中玩家" />
                         <Border
-                            Width="70"
-                            Height="70"
+                            Width="60"
+                            Height="60"
                             Margin="20,5,5,5"
                             HorizontalAlignment="Left"
                             BorderBrush="Gray"
@@ -77,7 +73,7 @@
                             </Button.Style>
                         </Button>
                         <!--  **************************  -->
-                        <ui:UiLabelIcon Content="添加新的Admin玩家" />
+                        <ui:UiLabelIcon Content="添加新玩家" />
                         <ui:UiTextBoxHint x:Name="TextBox_NewAdminName" Hint="请输入玩家ID" />
                         <Button
                             x:Name="Button_AddNewAdmin"
@@ -108,14 +104,14 @@
                         Margin="5"
                         Style="{StaticResource ListBoxStyle_Admin}" />
                     <StackPanel>
-                        <ui:UiLabelIcon Content="当前选中项" />
+                        <ui:UiLabelIcon Content="选中玩家" />
                         <TextBlock
                             Margin="5"
                             FontWeight="Bold"
                             Text="玩家头像" />
                         <Border
-                            Width="70"
-                            Height="70"
+                            Width="60"
+                            Height="60"
                             Margin="20,5,5,5"
                             HorizontalAlignment="Left"
                             BorderBrush="Gray"
@@ -153,7 +149,7 @@
                             </Button.Style>
                         </Button>
                         <!--  **************************  -->
-                        <ui:UiLabelIcon Content="添加新的VIP玩家" />
+                        <ui:UiLabelIcon Content="添加新玩家" />
                         <ui:UiTextBoxHint x:Name="TextBox_NewVIPName" Hint="请输入玩家ID" />
                         <Button
                             x:Name="Button_AddNewVIP"
@@ -180,14 +176,14 @@
                         Margin="5"
                         Style="{StaticResource ListBoxStyle_Admin}" />
                     <StackPanel>
-                        <ui:UiLabelIcon Content="当前选中项" />
+                        <ui:UiLabelIcon Content="选中玩家" />
                         <TextBlock
                             Margin="5"
                             FontWeight="Bold"
                             Text="玩家头像" />
                         <Border
-                            Width="70"
-                            Height="70"
+                            Width="60"
+                            Height="60"
                             Margin="20,5,5,5"
                             HorizontalAlignment="Left"
                             BorderBrush="Gray"
@@ -225,7 +221,7 @@
                             </Button.Style>
                         </Button>
                         <!--  **************************  -->
-                        <ui:UiLabelIcon Content="添加新的BAN玩家" />
+                        <ui:UiLabelIcon Content="添加新玩家" />
                         <ui:UiTextBoxHint x:Name="TextBox_NewBANName" Hint="请输入玩家ID" />
                         <Button
                             x:Name="Button_AddNewBAN"

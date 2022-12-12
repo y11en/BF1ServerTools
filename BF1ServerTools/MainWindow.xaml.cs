@@ -77,10 +77,13 @@ public partial class MainWindow
 
         // 客户端程序版本号
         MainModel.VersionInfo = CoreUtil.ClientVersionInfo;
-
         MainModel.AppRunTime = "loading...";
-        MainModel.DisplayName = "loading...";
-        MainModel.PersonaId = 0;
+
+        MainModel.DisplayName1 = "loading...";
+        MainModel.PersonaId1 = 0;
+
+        MainModel.DisplayName2 = "loading...";
+        MainModel.PersonaId2 = 0;
 
         // 获取当前时间，存储到对于变量中
         Origin_DateTime = DateTime.Now;
@@ -127,6 +130,19 @@ public partial class MainWindow
         {
             // 获取软件运行时间
             MainModel.AppRunTime = MiscUtil.ExecDateDiff(Origin_DateTime, DateTime.Now);
+
+            // 是否使用模式1
+            MainModel.IsUseMode1 = Globals.IsUseMode1;
+
+            // 模式1玩家信息
+            var localData = Player.GetLocalPlayer();
+            Globals.DisplayName1 = localData.DisplayName;
+            Globals.PersonaId1 = localData.PersonaId;
+            MainModel.DisplayName1 = Globals.DisplayName1;
+            MainModel.PersonaId1 = Globals.PersonaId1;
+            // 模式2玩家信息
+            MainModel.DisplayName2 = Globals.DisplayName2;
+            MainModel.PersonaId2 = Globals.PersonaId2;
 
             if (!ProcessUtil.IsBf1Run())
             {

@@ -45,7 +45,8 @@
                                 Margin="5"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                Foreground="#4A9B2C"
+                                FontWeight="Bold"
+                                Foreground="Orange"
                                 Text="|" />
                             <TextBlock
                                 Margin="5"
@@ -287,57 +288,48 @@
                                 Name="MenuItem_Team1_ChangePlayerTeam"
                                 Click="MenuItem_Team1_ChangePlayerTeam_Click"
                                 Header="更换玩家队伍"
-                                Icon="⚖" />
+                                Icon="&#xe683;" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team1_KickPlayerCustom"
                                 Click="MenuItem_Team1_KickPlayerCustom_Click"
-                                Header="踢出玩家 - 自定义理由"
-                                Icon="🍨" />
+                                Header="踢出玩家 - 自定义理由" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team1_KickPlayerOffensiveBehavior"
                                 Click="MenuItem_Team1_KickPlayerOffensiveBehavior_Click"
-                                Header="踢出玩家 - 攻击性行为"
-                                Icon="🍔" />
+                                Header="踢出玩家 - 攻击性行为" />
                             <MenuItem
                                 Name="MenuItem_Team1_KickPlayerLatency"
                                 Click="MenuItem_Team1_KickPlayerLatency_Click"
-                                Header="踢出玩家 - 延迟"
-                                Icon="🍟" />
+                                Header="踢出玩家 - 延迟" />
                             <MenuItem
                                 Name="MenuItem_Team1_KickPlayerRuleViolation"
                                 Click="MenuItem_Team1_KickPlayerRuleViolation_Click"
-                                Header="踢出玩家 - 违反规则"
-                                Icon="🥪" />
+                                Header="踢出玩家 - 违反规则" />
                             <MenuItem
                                 Name="MenuItem_Team1_KickPlayerGeneral"
                                 Click="MenuItem_Team1_KickPlayerGeneral_Click"
-                                Header="踢出玩家 - 其他"
-                                Icon="🌮" />
+                                Header="踢出玩家 - 其他" />
                         </MenuItem>
                         <Separator />
                         <MenuItem
                             Name="MenuItem_Team1_CopyPlayerName"
                             Click="MenuItem_Team1_CopyPlayerName_Click"
-                            Header="复制玩家ID"
-                            Icon="🍊" />
+                            Header="复制玩家ID" />
                         <MenuItem
                             Name="MenuItem_Team1_CopyPlayerPersonaId"
                             Click="MenuItem_Team1_CopyPlayerPersonaId_Click"
-                            Header="复制玩家数字ID"
-                            Icon="🍓" />
+                            Header="复制玩家数字ID" />
                         <MenuItem
                             Name="MenuItem_Team1_CopyPlayerAllData"
                             Click="MenuItem_Team1_CopyPlayerAllData_Click"
-                            Header="复制玩家全部数据"
-                            Icon="🥭" />
+                            Header="复制玩家全部数据" />
                         <Separator />
                         <MenuItem
                             Name="MenuItem_Team1_QueryPlayerData"
                             Click="MenuItem_Team1_QueryPlayerData_Click"
-                            Header="查询玩家数据"
-                            Icon="💻" />
+                            Header="查询玩家数据" />
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>
@@ -430,57 +422,48 @@
                                 Name="MenuItem_Team2_ChangePlayerTeam"
                                 Click="MenuItem_Team2_ChangePlayerTeam_Click"
                                 Header="更换玩家队伍"
-                                Icon="⚖" />
+                                Icon="&#xe683;" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team2_KickPlayerCustom"
                                 Click="MenuItem_Team2_KickPlayerCustom_Click"
-                                Header="踢出玩家 - 自定义理由"
-                                Icon="🍨" />
+                                Header="踢出玩家 - 自定义理由" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team2_KickPlayerOffensiveBehavior"
                                 Click="MenuItem_Team2_KickPlayerOffensiveBehavior_Click"
-                                Header="踢出玩家 - 攻击性行为"
-                                Icon="🍔" />
+                                Header="踢出玩家 - 攻击性行为" />
                             <MenuItem
                                 Name="MenuItem_Team2_KickPlayerLatency"
                                 Click="MenuItem_Team2_KickPlayerLatency_Click"
-                                Header="踢出玩家 - 延迟"
-                                Icon="🍟" />
+                                Header="踢出玩家 - 延迟" />
                             <MenuItem
                                 Name="MenuItem_Team2_KickPlayerRuleViolation"
                                 Click="MenuItem_Team2_KickPlayerRuleViolation_Click"
-                                Header="踢出玩家 - 违反规则"
-                                Icon="🥪" />
+                                Header="踢出玩家 - 违反规则" />
                             <MenuItem
                                 Name="MenuItem_Team2_KickPlayerGeneral"
                                 Click="MenuItem_Team2_KickPlayerGeneral_Click"
-                                Header="踢出玩家 - 其他"
-                                Icon="🌮" />
+                                Header="踢出玩家 - 其他" />
                         </MenuItem>
                         <Separator />
                         <MenuItem
                             Name="MenuItem_Team2_CopyPlayerName"
                             Click="MenuItem_Team2_CopyPlayerName_Click"
-                            Header="复制玩家ID"
-                            Icon="🍊" />
+                            Header="复制玩家ID" />
                         <MenuItem
                             Name="MenuItem_Team2_CopyPlayerPersonaId"
                             Click="MenuItem_Team2_CopyPlayerPersonaId_Click"
-                            Header="复制玩家数字ID"
-                            Icon="🍓" />
+                            Header="复制玩家数字ID" />
                         <MenuItem
                             Name="MenuItem_Team2_CopyPlayerAllData"
                             Click="MenuItem_Team2_CopyPlayerAllData_Click"
-                            Header="复制玩家全部数据"
-                            Icon="🥭" />
+                            Header="复制玩家全部数据" />
                         <Separator />
                         <MenuItem
                             Name="MenuItem_Team2_QueryPlayerData"
                             Click="MenuItem_Team2_QueryPlayerData_Click"
-                            Header="查询玩家数据"
-                            Icon="💻" />
+                            Header="查询玩家数据" />
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.View>
@@ -587,47 +570,39 @@
                                 <MenuItem
                                     Name="MenuItem_Team01_KickPlayerCustom"
                                     Click="MenuItem_Team01_KickPlayerCustom_Click"
-                                    Header="踢出玩家 - 自定义理由"
-                                    Icon="🍨" />
+                                    Header="踢出玩家 - 自定义理由" />
                                 <Separator />
                                 <MenuItem
                                     Name="MenuItem_Team01_KickPlayerOffensiveBehavior"
                                     Click="MenuItem_Team01_KickPlayerOffensiveBehavior_Click"
-                                    Header="踢出玩家 - 攻击性行为"
-                                    Icon="🍔" />
+                                    Header="踢出玩家 - 攻击性行为" />
                                 <MenuItem
                                     Name="MenuItem_Team01_KickPlayerLatency"
                                     Click="MenuItem_Team01_KickPlayerLatency_Click"
-                                    Header="踢出玩家 - 延迟"
-                                    Icon="🍟" />
+                                    Header="踢出玩家 - 延迟" />
                                 <MenuItem
                                     Name="MenuItem_Team01_KickPlayerRuleViolation"
                                     Click="MenuItem_Team01_KickPlayerRuleViolation_Click"
-                                    Header="踢出玩家 - 违反规则"
-                                    Icon="🥪" />
+                                    Header="踢出玩家 - 违反规则" />
                                 <MenuItem
                                     Name="MenuItem_Team01_KickPlayerGeneral"
                                     Click="MenuItem_Team01_KickPlayerGeneral_Click"
-                                    Header="踢出玩家 - 其他"
-                                    Icon="🌮" />
+                                    Header="踢出玩家 - 其他" />
                             </MenuItem>
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team01_CopyPlayerName"
                                 Click="MenuItem_Team01_CopyPlayerName_Click"
-                                Header="复制玩家ID"
-                                Icon="🍊" />
+                                Header="复制玩家ID" />
                             <MenuItem
                                 Name="MenuItem_Team01_CopyPlayerPersonaId"
                                 Click="MenuItem_Team01_CopyPlayerPersonaId_Click"
-                                Header="复制玩家数字ID"
-                                Icon="🍓" />
+                                Header="复制玩家数字ID" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team01_QueryPlayerData"
                                 Click="MenuItem_Team01_QueryPlayerData_Click"
-                                Header="查询玩家数据"
-                                Icon="💻" />
+                                Header="查询玩家数据" />
                         </ContextMenu>
                     </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>
@@ -672,47 +647,39 @@
                                 <MenuItem
                                     Name="MenuItem_Team02_KickPlayerCustom"
                                     Click="MenuItem_Team02_KickPlayerCustom_Click"
-                                    Header="踢出玩家 - 自定义理由"
-                                    Icon="🍨" />
+                                    Header="踢出玩家 - 自定义理由" />
                                 <Separator />
                                 <MenuItem
                                     Name="MenuItem_Team02_KickPlayerOffensiveBehavior"
                                     Click="MenuItem_Team02_KickPlayerOffensiveBehavior_Click"
-                                    Header="踢出玩家 - 攻击性行为"
-                                    Icon="🍔" />
+                                    Header="踢出玩家 - 攻击性行为" />
                                 <MenuItem
                                     Name="MenuItem_Team02_KickPlayerLatency"
                                     Click="MenuItem_Team02_KickPlayerLatency_Click"
-                                    Header="踢出玩家 - 延迟"
-                                    Icon="🍟" />
+                                    Header="踢出玩家 - 延迟" />
                                 <MenuItem
                                     Name="MenuItem_Team02_KickPlayerRuleViolation"
                                     Click="MenuItem_Team02_KickPlayerRuleViolation_Click"
-                                    Header="踢出玩家 - 违反规则"
-                                    Icon="🥪" />
+                                    Header="踢出玩家 - 违反规则" />
                                 <MenuItem
                                     Name="MenuItem_Team02_KickPlayerGeneral"
                                     Click="MenuItem_Team02_KickPlayerGeneral_Click"
-                                    Header="踢出玩家 - 其他"
-                                    Icon="🌮" />
+                                    Header="踢出玩家 - 其他" />
                             </MenuItem>
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team02_CopyPlayerName"
                                 Click="MenuItem_Team02_CopyPlayerName_Click"
-                                Header="复制玩家ID"
-                                Icon="🍊" />
+                                Header="复制玩家ID" />
                             <MenuItem
                                 Name="MenuItem_Team02_CopyPlayerPersonaId"
                                 Click="MenuItem_Team02_CopyPlayerPersonaId_Click"
-                                Header="复制玩家数字ID"
-                                Icon="🍓" />
+                                Header="复制玩家数字ID" />
                             <Separator />
                             <MenuItem
                                 Name="MenuItem_Team02_QueryPlayerData"
                                 Click="MenuItem_Team02_QueryPlayerData_Click"
-                                Header="查询玩家数据"
-                                Icon="💻" />
+                                Header="查询玩家数据" />
                         </ContextMenu>
                     </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>

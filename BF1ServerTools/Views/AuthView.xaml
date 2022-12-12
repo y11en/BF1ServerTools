@@ -26,15 +26,15 @@
                     BorderBrush="Gray"
                     BorderThickness="1"
                     DockPanel.Dock="Left">
-                    <Image Source="{Binding AuthModel.Avatar, Converter={StaticResource StringToImageSourceConverter}}" Style="{StaticResource ImageStyle_HighQuality}" />
+                    <Image Source="{Binding AuthModel.Avatar2, Converter={StaticResource StringToImageSourceConverter}}" Style="{StaticResource ImageStyle_HighQuality}" />
                 </Border>
                 <StackPanel VerticalAlignment="Center" DockPanel.Dock="Right">
                     <TextBlock
                         Margin="0,0,0,10"
                         FontSize="16"
                         FontWeight="Bold"
-                        Text="{Binding AuthModel.DisplayName, FallbackValue='玩家昵称'}" />
-                    <TextBlock Text="{Binding AuthModel.PersonaId, FallbackValue='玩家数字ID'}" />
+                        Text="{Binding AuthModel.DisplayName2, FallbackValue='玩家昵称'}" />
+                    <TextBlock Text="{Binding AuthModel.PersonaId2, FallbackValue='玩家数字ID'}" />
                 </StackPanel>
             </DockPanel>
             <ComboBox
@@ -64,19 +64,21 @@
                 Margin="5"
                 Click="RadioButton_Mode12_Click"
                 Content="[模式1] 自动读取当前战地1游戏账号SessionId，开箱即用"
+                Foreground="#1E88E5"
                 GroupName="Mode" />
             <RadioButton
                 x:Name="RadioButton_Mode2"
                 Margin="5"
                 Click="RadioButton_Mode12_Click"
                 Content="[模式2] 需要玩家登录账号获取Cookies，支持多账号切换"
+                Foreground="#008000"
                 GroupName="Mode" />
-            <!--  ###############  -->
             <ui:UiLabelIcon Content="Cookies获取" />
             <Button
                 x:Name="Button_GetPlayerCookies"
                 Click="Button_GetPlayerCookies_Click"
-                Content="获取玩家Cookies数据" />
+                Content="获取玩家Cookies数据（模式2专用）" />
+            <!--  ###############  -->
             <!--  ###############  -->
             <ui:UiLabelIcon Content="验证权限" />
             <Button

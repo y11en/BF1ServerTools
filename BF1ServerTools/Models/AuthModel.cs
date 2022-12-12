@@ -8,19 +8,19 @@ public partial class AuthModel : ObservableObject
     /// 头像
     /// </summary>
     [ObservableProperty]
-    private string avatar;
+    private string avatar2;
 
     /// <summary>
     /// 显示名称
     /// </summary>
     [ObservableProperty]
-    private string displayName;
+    private string displayName2;
 
     /// <summary>
     /// 数字Id
     /// </summary>
     [ObservableProperty]
-    private long personaId;
+    private long personaId2;
 
     ///////////////////////////////////////////////
 

@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\IconFont.ttf" />
+    <Resource Include="Fonts\iconfont.ttf" />
   </ItemGroup>
 
 </Project>

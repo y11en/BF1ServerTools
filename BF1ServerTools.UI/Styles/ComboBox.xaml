@@ -64,6 +64,7 @@
                             <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                                 <Border
                                     Name="Back"
+                                    MinHeight="30"
                                     Padding="7"
                                     Background="White"
                                     BorderThickness="0">

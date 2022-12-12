@@ -11,6 +11,20 @@ public static class Player
     private const int MaxPlayer = 74;
 
     /// <summary>
+    /// 获取自己信息
+    /// </summary>
+    /// <returns></returns>
+    public static LocalData GetLocalPlayer()
+    {
+        var _baseAddress = Obfuscation.GetLocalPlayer();
+        return new LocalData()
+        {
+            DisplayName = Memory.ReadString(_baseAddress + 0x40, 64),
+            PersonaId = Memory.Read<long>(_baseAddress + 0x38)
+        };
+    }
+
+    /// <summary>
     /// 获取玩家列表信息
     /// </summary>
     /// <returns></returns>

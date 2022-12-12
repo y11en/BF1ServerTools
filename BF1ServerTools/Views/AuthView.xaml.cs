@@ -47,18 +47,17 @@ public partial class AuthView : UserControl
         // 如果配置文件不存在就创建
         if (!File.Exists(F_Auth_Path))
         {
-            AuthConfig.SelectedIndex = 0;
             AuthConfig.IsUseMode1 = true;
-            AuthConfig.SessionId1 = "";
+            AuthConfig.SelectedIndex = 0;
             AuthConfig.AuthInfos = new();
             // 初始化10个配置文件槽
             for (int i = 0; i < 10; i++)
             {
                 AuthConfig.AuthInfos.Add(new()
                 {
-                    Avatar = "",
-                    DisplayName = $"配置槽名称 {i + 1}",
-                    PersonaId = 0,
+                    Avatar2 = "",
+                    DisplayName2 = $"配置槽名称 {i + 1}",
+                    PersonaId2 = 0,
                     Sid = "",
                     Remid = "",
                     AccessToken = "",
@@ -76,7 +75,7 @@ public partial class AuthView : UserControl
             AuthConfig = JsonHelper.JsonDese<AuthConfig>(streamReader.ReadToEnd());
             // 读取配置文件名称
             foreach (var item in AuthConfig.AuthInfos)
-                ConfigNames.Add(item.DisplayName);
+                ConfigNames.Add(item.DisplayName2);
             // 读取选中配置文件索引
             ComboBox_ConfigNames.SelectedIndex = AuthConfig.SelectedIndex;
         }
@@ -89,9 +88,9 @@ public partial class AuthView : UserControl
         {
             this.Dispatcher.Invoke(() =>
             {
-                AuthModel.Avatar = Globals.Avatar;
-                AuthModel.DisplayName = Globals.DisplayName;
-                AuthModel.PersonaId = Globals.PersonaId;
+                AuthModel.Avatar2 = Globals.Avatar2;
+                AuthModel.DisplayName2 = Globals.DisplayName2;
+                AuthModel.PersonaId2 = Globals.PersonaId2;
 
                 AuthModel.Sid = Globals.Sid;
                 AuthModel.Remid = Globals.Remid;
@@ -120,16 +119,12 @@ public partial class AuthView : UserControl
         AutoRefreshTimerModel2.Elapsed += AutoRefreshTimerModel2_Elapsed;
         AutoRefreshTimerModel2.Start();
 
-        Task.Run(async () =>
-        {
-            await Task.Delay(2000);
-            WeakReferenceMessenger.Default.Send("", "RefushTitle");
+        ////////////////////////////////////////////
 
-            if (Globals.IsUseMode1)
-                AutoRefreshTimerModel1_Elapsed(null, null);
-            else
-                AutoRefreshTimerModel2_Elapsed(null, null);
-        });
+        if (Globals.IsUseMode1)
+            AutoRefreshTimerModel1_Elapsed(null, null);
+        else
+            AutoRefreshTimerModel2_Elapsed(null, null);
     }
 
     /// <summary>
@@ -149,15 +144,14 @@ public partial class AuthView : UserControl
         var index = ComboBox_ConfigNames.SelectedIndex;
         if (index != -1)
         {
-            AuthConfig.SelectedIndex = index;
             AuthConfig.IsUseMode1 = Globals.IsUseMode1;
-            AuthConfig.SessionId1 = Globals.SessionId1;
+            AuthConfig.SelectedIndex = index;
 
             var auth = AuthConfig.AuthInfos[index];
 
-            auth.Avatar = Globals.Avatar;
-            auth.DisplayName = Globals.DisplayName;
-            auth.PersonaId = Globals.PersonaId;
+            auth.Avatar2 = Globals.Avatar2;
+            auth.DisplayName2 = Globals.DisplayName2;
+            auth.PersonaId2 = Globals.PersonaId2;
             auth.Sid = Globals.Sid;
             auth.Remid = Globals.Remid;
             auth.AccessToken = Globals.AccessToken;
@@ -179,7 +173,6 @@ public partial class AuthView : UserControl
             return;
 
         Globals.IsUseMode1 = AuthConfig.IsUseMode1;
-        Globals.SessionId1 = AuthConfig.SessionId1;
 
         if (Globals.IsUseMode1)
             RadioButton_Mode1.IsChecked = true;
@@ -190,23 +183,21 @@ public partial class AuthView : UserControl
 
         var auth = AuthConfig.AuthInfos[index];
 
-        AuthModel.Avatar = auth.Avatar;
-        AuthModel.DisplayName = auth.DisplayName;
-        AuthModel.PersonaId = auth.PersonaId;
+        AuthModel.Avatar2 = auth.Avatar2;
+        AuthModel.DisplayName2 = auth.DisplayName2;
+        AuthModel.PersonaId2 = auth.PersonaId2;
         AuthModel.Sid = auth.Sid;
         AuthModel.Remid = auth.Remid;
         AuthModel.AccessToken = auth.AccessToken;
         AuthModel.SessionId2 = auth.SessionId2;
 
-        Globals.Avatar = auth.Avatar;
-        Globals.DisplayName = auth.DisplayName;
-        Globals.PersonaId = auth.PersonaId;
+        Globals.Avatar2 = auth.Avatar2;
+        Globals.DisplayName2 = auth.DisplayName2;
+        Globals.PersonaId2 = auth.PersonaId2;
         Globals.Sid = auth.Sid;
         Globals.Remid = auth.Remid;
         Globals.AccessToken = auth.AccessToken;
         Globals.SessionId2 = auth.SessionId2;
-
-        WeakReferenceMessenger.Default.Send("", "RefushTitle");
 
         SaveConfig();
     }
@@ -230,12 +221,12 @@ public partial class AuthView : UserControl
     /// <param name="sender"></param>
     /// <param name="e"></param>
     /// <exception cref="NotImplementedException"></exception>
-    private void AutoRefreshTimerModel1_Elapsed(object sender, ElapsedEventArgs e)
+    private async void AutoRefreshTimerModel1_Elapsed(object sender, ElapsedEventArgs e)
     {
         if (!Globals.IsUseMode1)
             return;
 
-        var sessionId = Scan.GetGatewaySession();
+        var sessionId = await Scan.GetGatewaySession();
         if (sessionId != string.Empty)
         {
             Globals.SessionId1 = sessionId;
@@ -282,7 +273,7 @@ public partial class AuthView : UserControl
             {
                 var envIdViaAuthCode = JsonHelper.JsonDese<EnvIdViaAuthCode>(result.Content);
                 Globals.SessionId2 = envIdViaAuthCode.result.sessionId;
-                Globals.PersonaId = long.Parse(envIdViaAuthCode.result.personaId);
+                Globals.PersonaId2 = long.Parse(envIdViaAuthCode.result.personaId);
 
                 result = await BF1API.GetPersonasByIds(Globals.SessionId2, Globals.PersonaId);
                 if (result.IsSuccess)
@@ -291,19 +282,18 @@ public partial class AuthView : UserControl
                     var personas = jNode["result"]![$"{Globals.PersonaId}"];
                     if (personas != null)
                     {
-                        Globals.Avatar = personas!["avatar"].GetValue<string>();
-                        Globals.DisplayName = personas!["displayName"].GetValue<string>();
+                        Globals.Avatar2 = personas!["avatar"].GetValue<string>();
+                        Globals.DisplayName2 = personas!["displayName"].GetValue<string>();
 
-                        AuthModel.Avatar = Globals.Avatar;
-                        AuthModel.DisplayName = Globals.DisplayName;
-                        AuthModel.PersonaId = Globals.PersonaId;
+                        AuthModel.Avatar2 = Globals.Avatar2;
+                        AuthModel.DisplayName2 = Globals.DisplayName2;
+                        AuthModel.PersonaId2 = Globals.PersonaId2;
 
                         AuthModel.Sid = Globals.Sid;
                         AuthModel.Remid = Globals.Remid;
                         AuthModel.SessionId2 = Globals.SessionId2;
 
                         LoggerHelper.Info("刷新玩家Cookies数据成功");
-                        WeakReferenceMessenger.Default.Send("", "RefushTitle");
                     }
                 }
             }
@@ -327,18 +317,17 @@ public partial class AuthView : UserControl
     /// <param name="e"></param>
     private void Button_GetPlayerCookies_Click(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(CoreWebView2Environment.GetAvailableBrowserVersionString()))
-        {
-            var webView2Window = new WebView2Window()
-            {
-                Owner = MainWindow.MainWindowInstance
-            };
-            webView2Window.ShowDialog();
-        }
-        else
+        if (string.IsNullOrEmpty(CoreWebView2Environment.GetAvailableBrowserVersionString()))
         {
             NotifierHelper.Show(NotifierType.Warning, "未检测到WebView2对应依赖，请安装对应依赖");
+            return;
         }
+
+        var webView2Window = new WebView2Window()
+        {
+            Owner = MainWindow.MainWindowInstance
+        };
+        webView2Window.ShowDialog();
     }
 
     /// <summary>
@@ -348,16 +337,31 @@ public partial class AuthView : UserControl
     /// <param name="e"></param>
     private async void Button_RefreshAuthInfo_Click(object sender, RoutedEventArgs e)
     {
-        bool isSuccess = false;
-
-        AuthModel.Avatar = string.Empty;
-        AuthModel.DisplayName = "刷新中...";
-        AuthModel.PersonaId = 0;
-
-        NotifierHelper.Show(NotifierType.Information, "正在刷新中，请稍后...");
-
-        if (!string.IsNullOrEmpty(Globals.Remid) && !string.IsNullOrEmpty(Globals.Sid))
+        if (Globals.IsUseMode1)
         {
+            NotifierHelper.Show(NotifierType.Information, "正在内存扫描中，请稍后...");
+
+            var sessionId = await Scan.GetGatewaySession();
+            if (sessionId != string.Empty)
+            {
+                Globals.SessionId1 = sessionId;
+                NotifierHelper.Show(NotifierType.Information, $"内存扫描SessionId成功 {Globals.SessionId1}");
+            }
+            else
+            {
+                NotifierHelper.Show(NotifierType.Information, "内存扫描SessionId失败");
+            }
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(Globals.Remid) || string.IsNullOrEmpty(Globals.Sid))
+            {
+                NotifierHelper.Show(NotifierType.Warning, "玩家Remid或Sid为空，请先获取玩家Cookies");
+                return;
+            }
+
+            NotifierHelper.Show(NotifierType.Information, "正在刷新中，请稍后...");
+
             var respAuth = await EA1API.GetAuthCode(Globals.Remid, Globals.Sid);
             if (respAuth.IsSuccess)
             {
@@ -380,7 +384,7 @@ public partial class AuthView : UserControl
                 {
                     var envIdViaAuthCode = JsonHelper.JsonDese<EnvIdViaAuthCode>(result.Content);
                     Globals.SessionId2 = envIdViaAuthCode.result.sessionId;
-                    Globals.PersonaId = long.Parse(envIdViaAuthCode.result.personaId);
+                    Globals.PersonaId2 = long.Parse(envIdViaAuthCode.result.personaId);
 
                     result = await BF1API.GetPersonasByIds(Globals.SessionId2, Globals.PersonaId);
                     if (result.IsSuccess)
@@ -389,20 +393,18 @@ public partial class AuthView : UserControl
                         var personas = jNode["result"]![$"{Globals.PersonaId}"];
                         if (personas != null)
                         {
-                            Globals.Avatar = personas!["avatar"].GetValue<string>();
-                            Globals.DisplayName = personas!["displayName"].GetValue<string>();
+                            Globals.Avatar2 = personas!["avatar"].GetValue<string>();
+                            Globals.DisplayName2 = personas!["displayName"].GetValue<string>();
 
-                            AuthModel.Avatar = Globals.Avatar;
-                            AuthModel.DisplayName = Globals.DisplayName;
-                            AuthModel.PersonaId = Globals.PersonaId;
+                            AuthModel.Avatar2 = Globals.Avatar2;
+                            AuthModel.DisplayName2 = Globals.DisplayName2;
+                            AuthModel.PersonaId2 = Globals.PersonaId2;
 
                             AuthModel.Sid = Globals.Sid;
                             AuthModel.Remid = Globals.Remid;
                             AuthModel.SessionId2 = Globals.SessionId2;
 
                             NotifierHelper.Show(NotifierType.Success, "刷新玩家Cookies数据成功");
-                            WeakReferenceMessenger.Default.Send("", "RefushTitle");
-                            isSuccess = true;
                         }
                     }
                     else
@@ -417,19 +419,8 @@ public partial class AuthView : UserControl
             }
             else
             {
-                NotifierHelper.Show(NotifierType.Error, $"刷新失败，玩家Remid或Sid可能已过期");
+                NotifierHelper.Show(NotifierType.Error, "刷新失败，玩家Remid或Sid可能已过期");
             }
-        }
-        else
-        {
-            NotifierHelper.Show(NotifierType.Error, "刷新失败，玩家Remid或Sid为空");
-        }
-
-        if (!isSuccess)
-        {
-            AuthModel.Avatar = string.Empty;
-            AuthModel.DisplayName = "刷新失败";
-            AuthModel.PersonaId = 0;
         }
     }
 
@@ -440,34 +431,33 @@ public partial class AuthView : UserControl
     /// <param name="e"></param>
     private async void Button_VerifySessionId_Click(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(Globals.SessionId))
+        if (string.IsNullOrEmpty(Globals.SessionId))
         {
-            TextBlock_SessionIdState.Text = "正在验证中，请稍后...";
-            Border_SessionIdState.Background = Brushes.Gray;
-            NotifierHelper.Show(NotifierType.Information, "正在验证中，请稍后...");
+            NotifierHelper.Show(NotifierType.Warning, "玩家SessionId为空，请先获取玩家SessionId");
+            return;
+        }
 
-            _ = BF1API.SetAPILocale(Globals.SessionId);
+        TextBlock_SessionIdState.Text = "正在验证中，请稍后...";
+        Border_SessionIdState.Background = Brushes.Gray;
+        NotifierHelper.Show(NotifierType.Information, "正在验证中，请稍后...");
 
-            var result = await BF1API.GetWelcomeMessage(Globals.SessionId);
-            if (result.IsSuccess)
-            {
-                var welcomeMsg = JsonHelper.JsonDese<WelcomeMsg>(result.Content);
-                var firstMessage = ChsUtil.ToSimplified(welcomeMsg.result.firstMessage);
+        _ = BF1API.SetAPILocale(Globals.SessionId);
 
-                TextBlock_SessionIdState.Text = firstMessage;
-                Border_SessionIdState.Background = Brushes.Green;
-                NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  验证成功\n{firstMessage}");
-            }
-            else
-            {
-                TextBlock_SessionIdState.Text = "验证失败";
-                Border_SessionIdState.Background = Brushes.OrangeRed;
-                NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  验证失败\n{result.Content}");
-            }
+        var result = await BF1API.GetWelcomeMessage(Globals.SessionId);
+        if (result.IsSuccess)
+        {
+            var welcomeMsg = JsonHelper.JsonDese<WelcomeMsg>(result.Content);
+            var firstMessage = ChsUtil.ToSimplified(welcomeMsg.result.firstMessage);
+
+            TextBlock_SessionIdState.Text = firstMessage;
+            Border_SessionIdState.Background = Brushes.Green;
+            NotifierHelper.Show(NotifierType.Success, $"[{result.ExecTime:0.00} 秒]  验证成功\n{firstMessage}");
         }
         else
         {
-            NotifierHelper.Show(NotifierType.Warning, "玩家SessionId为空，请先获取玩家SessionId");
+            TextBlock_SessionIdState.Text = "验证失败";
+            Border_SessionIdState.Background = Brushes.OrangeRed;
+            NotifierHelper.Show(NotifierType.Error, $"[{result.ExecTime:0.00} 秒]  验证失败\n{result.Content}");
         }
     }
 

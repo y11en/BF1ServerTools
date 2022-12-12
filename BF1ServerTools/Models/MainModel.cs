@@ -17,20 +17,36 @@ public partial class MainModel : ObservableObject
     private string appRunTime;
 
     /// <summary>
-    /// 头像
+    /// 是否使用模式1
     /// </summary>
     [ObservableProperty]
-    private string avatar;
+    private bool isUseMode1;
+
+    ///////////////////////////////////////////////
 
     /// <summary>
-    /// 显示名称
+    /// 模式1 显示名称
     /// </summary>
     [ObservableProperty]
-    private string displayName;
+    private string displayName1;
 
     /// <summary>
-    /// 数字Id
+    /// 模式1 数字Id
     /// </summary>
     [ObservableProperty]
-    private long personaId;
+    private long personaId1;
+
+    ///////////////////////////////////////////////
+
+    /// <summary>
+    /// 模式2 显示名称
+    /// </summary>
+    [ObservableProperty]
+    private string displayName2;
+
+    /// <summary>
+    /// 模式2 数字Id
+    /// </summary>
+    [ObservableProperty]
+    private long personaId2;
 }

@@ -119,7 +119,7 @@ public partial class WebView2Window
             var envIdViaAuthCode = JsonHelper.JsonDese<EnvIdViaAuthCode>(result.Content);
 
             Globals.SessionId2 = envIdViaAuthCode.result.sessionId;
-            Globals.PersonaId = long.Parse(envIdViaAuthCode.result.personaId);
+            Globals.PersonaId2 = long.Parse(envIdViaAuthCode.result.personaId);
 
             TextBox_SessionId2.Text = envIdViaAuthCode.result.sessionId;
             TextBlock_Log.Text = "获取SessionId成功";
@@ -133,14 +133,13 @@ public partial class WebView2Window
                 var personas = jNode["result"]![$"{Globals.PersonaId}"];
                 if (personas != null)
                 {
-                    Globals.Avatar = personas!["avatar"].GetValue<string>();
-                    Globals.DisplayName = personas!["displayName"].GetValue<string>();
+                    Globals.Avatar2 = personas!["avatar"].GetValue<string>();
+                    Globals.DisplayName2 = personas!["displayName"].GetValue<string>();
                 }
             }
 
             // 获取成功，通知主窗口更新数据（相关数据已刷新全局变量）
             WeakReferenceMessenger.Default.Send("", "SendRemidSid");
-            WeakReferenceMessenger.Default.Send("", "RefushTitle");
         }
         else
         {

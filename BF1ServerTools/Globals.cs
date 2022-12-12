@@ -9,20 +9,71 @@ public static class Globals
     /// </summary>
     public static OrderBy OrderBy = OrderBy.Score;
 
+    /// <summary>
+    /// 是否使用模式1
+    /// </summary>
+    public static bool IsUseMode1 = true;
+
     ///////////////////////////////////////////////////////
 
     /// <summary>
+    /// 模式1 玩家Avatar
+    /// </summary>
+    public static string Avatar1 = string.Empty;
+    /// <summary>
+    /// 模式2 玩家Avatar
+    /// </summary>
+    public static string Avatar2 = string.Empty;
+    /// <summary>
     /// 玩家Avatar
     /// </summary>
-    public static string Avatar = string.Empty;
+    public static string Avatar
+    {
+        get
+        {
+            return IsUseMode1 ? Avatar1 : Avatar2;
+        }
+    }
+
     /// <summary>
-    /// 玩家DisplayName
+    /// 模式1 玩家DisplayName
     /// </summary>
-    public static string DisplayName = string.Empty;
+    public static string DisplayName1 = string.Empty;
     /// <summary>
-    /// 玩家PersonaId
+    /// 模式2 玩家DisplayName
     /// </summary>
-    public static long PersonaId = 0;
+    public static string DisplayName2 = string.Empty;
+    /// <summary>
+    /// 全局玩家DisplayName
+    /// </summary>
+    public static string DisplayName
+    {
+        get
+        {
+            return IsUseMode1 ? DisplayName1 : DisplayName2;
+        }
+    }
+
+    /// <summary>
+    /// 模式1 玩家PersonaId
+    /// </summary>
+    public static long PersonaId1 = 0;
+    /// <summary>
+    /// 模式2 玩家PersonaId
+    /// </summary>
+    public static long PersonaId2 = 0;
+    /// <summary>
+    /// 全局PersonaId
+    /// </summary>
+    public static long PersonaId
+    {
+        get
+        {
+            return IsUseMode1 ? PersonaId1 : PersonaId2;
+        }
+    }
+
+    ///////////////////////////////////////////////////////
 
     /// <summary>
     /// 玩家Remid
@@ -38,19 +89,15 @@ public static class Globals
     public static string AccessToken = string.Empty;
 
     /// <summary>
-    /// 是否使用模式1
-    /// </summary>
-    public static bool IsUseMode1 = true;
-    /// <summary>
-    /// 模式1 SessionId
+    /// 模式1 玩家SessionId
     /// </summary>
     public static string SessionId1 = string.Empty;
     /// <summary>
-    /// 模式2 SessionId
+    /// 模式2 玩家SessionId
     /// </summary>
     public static string SessionId2 = string.Empty;
     /// <summary>
-    /// 全局SessionId
+    /// 全局玩家SessionId
     /// </summary>
     public static string SessionId
     {
@@ -83,7 +130,10 @@ public static class Globals
     {
         get
         {
-            return ServerAdmins_PID.Contains(PersonaId);
+            if (IsUseMode1)
+                return ServerAdmins_PID.Contains(PersonaId1);
+            else
+                return ServerAdmins_PID.Contains(PersonaId2);
         }
     }
 

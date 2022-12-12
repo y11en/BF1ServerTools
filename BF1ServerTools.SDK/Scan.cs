@@ -21,49 +21,52 @@ public static class Scan
     /// 获取内存中GatewaySession
     /// </summary>
     /// <returns></returns>
-    public static string GetGatewaySession()
+    public static async Task<string> GetGatewaySession()
     {
-        _canReads.Clear();
-
-        var mbi = default(MEMORY_BASIC_INFORMATION64);
-        var size = Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION64));
-
-        long baseAddress = 0;
-        long maxAddress = long.MaxValue;
-
-        while (baseAddress >= 0 && baseAddress <= maxAddress && mbi.RegionSize >= 0)
+        return await Task.Run(() =>
         {
-            // 扫描内存信息
-            if (Win32.VirtualQueryEx(Memory.Bf1ProHandle, new IntPtr(baseAddress), out mbi, size) == 0)
-                break;
+            _canReads.Clear();
 
-            // 如果是已物理分配 并且是 可读写内存
-            if (mbi.State == (int)AllocationType.Commit && mbi.Protect == (int)AllocationProtect.PAGE_READWRITE)
+            var mbi = default(MEMORY_BASIC_INFORMATION64);
+            var size = Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION64));
+
+            long baseAddress = 0;
+            long maxAddress = long.MaxValue;
+
+            while (baseAddress >= 0 && baseAddress <= maxAddress && mbi.RegionSize >= 0)
             {
-                _canReads.Add(new CanReadAddress()
+                // 扫描内存信息
+                if (Win32.VirtualQueryEx(Memory.Bf1ProHandle, new IntPtr(baseAddress), out mbi, size) == 0)
+                    break;
+
+                // 如果是已物理分配 并且是 可读写内存
+                if (mbi.State == (int)AllocationType.Commit && mbi.Protect == (int)AllocationProtect.PAGE_READWRITE)
                 {
-                    Address = baseAddress,
-                    Size = (int)mbi.RegionSize
-                });
+                    _canReads.Add(new CanReadAddress()
+                    {
+                        Address = baseAddress,
+                        Size = (int)mbi.RegionSize
+                    });
+                }
+
+                // 设置基地址偏移
+                baseAddress += (long)mbi.RegionSize;
             }
 
-            // 设置基地址偏移
-            baseAddress += (long)mbi.RegionSize;
-        }
-
-        foreach (var item in _canReads)
-        {
-            var addr = FindPattern(SessionIdMask, item.Address, item.Size);
-            if (addr != 0)
+            foreach (var item in _canReads)
             {
-                var str = Memory.ReadString(addr, 54);
-                str = str.Replace("X-GatewaySession: ", "").Trim();
-                if (IsGuidByReg(str))
-                    return str;
+                var addr = FindPattern(SessionIdMask, item.Address, item.Size);
+                if (addr != 0)
+                {
+                    var str = Memory.ReadString(addr, 54);
+                    str = str.Replace("X-GatewaySession: ", "").Trim();
+                    if (IsGuidByReg(str))
+                        return str;
+                }
             }
-        }
 
-        return string.Empty;
+            return string.Empty;
+        });
     }
 
     /// <summary>
