@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using BF1ServerTools.Utils;
 
-namespace BF1ServerTools.Views.More
+namespace BF1ServerTools.Views.More;
+
+/// <summary>
+/// AboutView.xaml 的交互逻辑
+/// </summary>
+public partial class AboutView : UserControl
 {
-    /// <summary>
-    /// AboutView.xaml 的交互逻辑
-    /// </summary>
-    public partial class AboutView : UserControl
+    public AboutView()
     {
-        public AboutView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+
+    private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+    {
+        ProcessUtil.OpenPath(e.Uri.OriginalString);
+        e.Handled = true;
+    }
+
+    private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        ProcessUtil.OpenPath("https://afdian.net/@crazyzhang");
     }
 }

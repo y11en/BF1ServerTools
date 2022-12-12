@@ -154,6 +154,7 @@ public partial class MonitView : UserControl
                         int deaths = detailedStats.result.basicStats.deaths;
                         float kd = PlayerUtil.GetPlayerKD(kills, deaths);
                         float kpm = detailedStats.result.basicStats.kpm;
+                        int time = PlayerUtil.GetPlayHours(detailedStats.result.basicStats.timePlayed);
 
                         Globals.LifePlayerCacheDatas.Add(new()
                         {
@@ -162,6 +163,7 @@ public partial class MonitView : UserControl
                             PersonaId = item.PersonaId,
                             KD = kd,
                             KPM = kpm,
+                            Time = time,
                             WeaponInfos = new(),
                             VehicleInfos = new()
                         });

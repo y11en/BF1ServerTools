@@ -16,8 +16,10 @@
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/RichTextBox.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/Slider.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/GroupBox.xaml" />
 
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListBox.xaml" />
+        <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListBox2.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListView.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/ListView2.xaml" />
         <ResourceDictionary Source="/BF1ServerTools.UI;component/Styles/DataGrid.xaml" />

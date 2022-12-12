@@ -1,4 +1,7 @@
 ﻿using BF1ServerTools.SDK.Core;
+using System.Windows.Input;
+using System;
+using System.Globalization;
 
 namespace BF1ServerTools.SDK;
 
@@ -31,6 +34,15 @@ public static class Chat
     /// 用于线程加锁
     /// </summary>
     private static readonly object Obj = new();
+
+    /// <summary>
+    /// 美式键盘
+    /// </summary>
+    private static readonly CultureInfo ENUS = new("en-US");
+    /// <summary>
+    /// 微软拼音
+    /// </summary>
+    private static readonly CultureInfo ZHCN = new("zh-CN");
 
     /// <summary>
     /// 判断战地1聊天框是否开启，开启返回true，关闭或其他返回false
@@ -174,6 +186,22 @@ public static class Chat
     }
 
     //////////////////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 设置输入法为美式键盘
+    /// </summary>
+    public static void SetInputLanguageENUS()
+    {
+        InputLanguageManager.Current.CurrentInputLanguage = ENUS;
+    }
+
+    /// <summary>
+    /// 设置输入法为微软拼音
+    /// </summary>
+    public static void SetInputLanguageZHCN()
+    {
+        InputLanguageManager.Current.CurrentInputLanguage = ZHCN;
+    }
 
     /// <summary>
     /// 发送中文聊天消息到战地1

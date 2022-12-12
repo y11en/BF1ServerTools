@@ -1,4 +1,6 @@
-﻿namespace BF1ServerTools.SDK.Core;
+﻿using System.Windows.Media.Media3D;
+
+namespace BF1ServerTools.SDK.Core;
 
 public static class Memory
 {
@@ -128,7 +130,7 @@ public static class Memory
     /// 获取战地1窗口数据
     /// </summary>
     /// <returns></returns>
-    public static WindowData GetBF1WindowData()
+    public static bool GetBF1WindowData(out WindowData windowData)
     {
         // 获取指定窗口句柄的窗口矩形数据和客户区矩形数据
         Win32.GetWindowRect(Bf1WinHandle, out W32RECT windowRect);
@@ -141,13 +143,11 @@ public static class Memory
         // 处理窗口最小化
         if (windowRect.Left == -32000)
         {
-            return new WindowData()
-            {
-                Left = 0,
-                Top = 0,
-                Width = 1,
-                Height = 1
-            };
+            windowData.Left = 0;
+            windowData.Top = 0;
+            windowData.Width = 1;
+            windowData.Height = 1;
+            return false;
         }
 
         // 计算客户区的宽和高
@@ -158,13 +158,11 @@ public static class Memory
         var borderWidth = (windowWidth - clientWidth) / 2;
         var borderHeight = windowHeight - clientHeight - borderWidth;
 
-        return new WindowData()
-        {
-            Left = windowRect.Left += borderWidth,
-            Top = windowRect.Top += borderHeight,
-            Width = clientWidth,
-            Height = clientHeight
-        };
+        windowData.Left = windowRect.Left += borderWidth;
+        windowData.Top = windowRect.Top += borderHeight;
+        windowData.Width = clientWidth;
+        windowData.Height = clientHeight;
+        return true;
     }
 
     //////////////////////////////////////////////////////////////////

@@ -25,6 +25,17 @@ public static class PlayerUtil
     }
 
     /// <summary>
+    /// 获取游玩小时数
+    /// </summary>
+    /// <param name="second"></param>
+    /// <returns></returns>
+    public static int GetPlayHours(double second)
+    {
+        var ts = TimeSpan.FromSeconds(second);
+        return (int)ts.TotalHours;
+    }
+
+    /// <summary>
     /// 计算玩家KD
     /// </summary>
     /// <param name="kill">玩家击杀数</param>

@@ -12,6 +12,14 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <Style
+        x:Key="TextBlockStyle_AboutIconFont"
+        BasedOn="{StaticResource TextBlockStyle_IconFontBase}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="36" />
+    </Style>
+
     <!--  通用文本提示样式  -->
     <Style x:Key="TextBlockStyle_Hint" TargetType="{x:Type TextBlock}">
         <Setter Property="Margin" Value="5" />

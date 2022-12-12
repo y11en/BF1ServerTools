@@ -8,9 +8,10 @@ public class LifeDataInfo
     public long PersonaId { get; set; }
     public float KD { get; set; }
     public float KPM { get; set; }
+    public int Time { get; set; }
     public bool IsWeaponOK { get; set; }
     public bool IsVehicleOK { get; set; }
     public int WeaponCount { get; set; }
     public int VehicleCount { get; set; }
-    public string Time { get; set; }
+    public string Date { get; set; }
 }

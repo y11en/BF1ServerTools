@@ -231,6 +231,7 @@ public partial class ScoreView : UserControl
 
                 item.LifeKd = PlayerUtil.GetLifeKD(item.PersonaId);
                 item.LifeKpm = PlayerUtil.GetLifeKPM(item.PersonaId);
+                item.LifeTime = PlayerUtil.GetLifeTime(item.PersonaId);
 
                 item.Admin = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerAdmins_PID);
                 item.Vip = PlayerUtil.IsAdminVIPWhite(item.PersonaId, Globals.ServerVIPs_PID);
@@ -399,6 +400,7 @@ public partial class ScoreView : UserControl
                     ListView_PlayerList_Team1[i].Kpm = PlayerList_Team1[index].Kpm;
                     ListView_PlayerList_Team1[i].LifeKd = PlayerList_Team1[index].LifeKd;
                     ListView_PlayerList_Team1[i].LifeKpm = PlayerList_Team1[index].LifeKpm;
+                    ListView_PlayerList_Team1[i].LifeTime = PlayerList_Team1[index].LifeTime;
                     ListView_PlayerList_Team1[i].Score = PlayerList_Team1[index].Score;
                     ListView_PlayerList_Team1[i].Kit = PlayerList_Team1[index].Kit;
                     ListView_PlayerList_Team1[i].Kit2 = PlayerList_Team1[index].Kit2;
@@ -440,6 +442,7 @@ public partial class ScoreView : UserControl
                         Kpm = PlayerList_Team1[i].Kpm,
                         LifeKd = PlayerList_Team1[i].LifeKd,
                         LifeKpm = PlayerList_Team1[i].LifeKpm,
+                        LifeTime = PlayerList_Team1[i].LifeTime,
                         Score = PlayerList_Team1[i].Score,
                         Kit = PlayerList_Team1[i].Kit,
                         Kit2 = PlayerList_Team1[i].Kit2,
@@ -494,6 +497,7 @@ public partial class ScoreView : UserControl
                     ListView_PlayerList_Team2[i].Kpm = PlayerList_Team2[index].Kpm;
                     ListView_PlayerList_Team2[i].LifeKd = PlayerList_Team2[index].LifeKd;
                     ListView_PlayerList_Team2[i].LifeKpm = PlayerList_Team2[index].LifeKpm;
+                    ListView_PlayerList_Team2[i].LifeTime = PlayerList_Team2[index].LifeTime;
                     ListView_PlayerList_Team2[i].Score = PlayerList_Team2[index].Score;
                     ListView_PlayerList_Team2[i].Kit = PlayerList_Team2[index].Kit;
                     ListView_PlayerList_Team2[i].Kit2 = PlayerList_Team2[index].Kit2;
@@ -535,6 +539,7 @@ public partial class ScoreView : UserControl
                         Kpm = PlayerList_Team2[i].Kpm,
                         LifeKd = PlayerList_Team2[i].LifeKd,
                         LifeKpm = PlayerList_Team2[i].LifeKpm,
+                        LifeTime = PlayerList_Team2[i].LifeTime,
                         Score = PlayerList_Team2[i].Score,
                         Kit = PlayerList_Team2[i].Kit,
                         Kit2 = PlayerList_Team2[i].Kit2,
