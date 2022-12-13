@@ -125,10 +125,9 @@
                     x:Name="ToggleButton_RunAutoKick"
                     Margin="5"
                     Click="ToggleButton_RunAutoKick_Click"
-                    Content="激活自动踢出违规玩家功能"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="#1E88E5" />
+                    Content="激活自动踢出违规玩家"
+                    FontSize="14"
+                    FontWeight="Bold" />
             </StackPanel>
             <ui:UiLabelIcon Content="日志" DockPanel.Dock="Top" />
             <TextBox

@@ -17,8 +17,7 @@
                 <MenuItem
                     x:Name="MenuItem_RefushLifeDataCache"
                     Click="MenuItem_RefushLifeDataCache_Click"
-                    Header="刷新玩家生涯缓存数据"
-                    Icon="⚡" />
+                    Header="刷新玩家生涯缓存数据" />
             </ContextMenu>
         </DataGrid.ContextMenu>
         <DataGrid.Columns>

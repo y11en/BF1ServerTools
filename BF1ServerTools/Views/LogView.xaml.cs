@@ -173,8 +173,8 @@ public partial class LogView : UserControl
             });
         });
 
-        //ChatView.ActionChangeTeamNotice(info);
-        //RobotView.ActionSendChangeTeamLogToQQ(info);
+        ChatView.ActionChangeTeamNotice(info);
+        RobotView.ActionSendChangeTeamLogToQQ(info);
     }
 
     /////////////////////////////////////////////////////

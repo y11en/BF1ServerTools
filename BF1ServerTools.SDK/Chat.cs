@@ -33,15 +33,6 @@ public static class Chat
     private static readonly object Obj = new();
 
     /// <summary>
-    /// 美式键盘
-    /// </summary>
-    private static readonly CultureInfo ENUS = new("en-US");
-    /// <summary>
-    /// 微软拼音
-    /// </summary>
-    private static readonly CultureInfo ZHCN = new("zh-CN");
-
-    /// <summary>
     /// 判断战地1聊天框是否开启，开启返回true，关闭或其他返回false
     /// </summary>
     /// <returns></returns>
@@ -185,22 +176,6 @@ public static class Chat
     //////////////////////////////////////////////////////////////////
 
     /// <summary>
-    /// 设置输入法为美式键盘
-    /// </summary>
-    public static void SetInputLanguageENUS()
-    {
-        InputLanguageManager.Current.CurrentInputLanguage = ENUS;
-    }
-
-    /// <summary>
-    /// 设置输入法为微软拼音
-    /// </summary>
-    public static void SetInputLanguageZHCN()
-    {
-        InputLanguageManager.Current.CurrentInputLanguage = ZHCN;
-    }
-
-    /// <summary>
     /// 发送中文聊天消息到战地1
     /// </summary>
     /// <param name="message"></param>
@@ -213,7 +188,7 @@ public static class Chat
                 // 挂起战地1进程
                 Memory.SuspendBF1Process();
 
-                var length = GetStrLength(message);
+                var length = GetStrLength(message.Trim());
                 Memory.WriteString(AllocateMemAddress.ToInt64(), message);
 
                 var startPtr = ChatMessagePointer() + OFFSET_CHAT_MESSAGE_START;
@@ -261,31 +236,6 @@ public static class Chat
     }
 
     /// <summary>
-    /// 全角字符转半角字符
-    /// </summary>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    public static string ToDBC(string input)
-    {
-        var chars = input.ToCharArray();
-        for (int i = 0; i < chars.Length; i++)
-        {
-            if (chars[i] == 12288)
-            {
-                chars[i] = (char)32;
-                continue;
-            }
-
-            if (chars[i] > 65280 && chars[i] < 65375)
-            {
-                chars[i] = (char)(chars[i] - 65248);
-            }
-        }
-
-        return new string(chars);
-    }
-
-    /// <summary>
     /// 判断战地1输入框字符串长度，中文3，英文1
     /// </summary>
     /// <param name="str">需要判断的字符串</param>
@@ -296,19 +246,14 @@ public static class Chat
         if (string.IsNullOrEmpty(str))
             return 0;
 
-        var ascii = new ASCIIEncoding();
         int tempLen = 0;
-        var bytes = ascii.GetBytes(str);
+        var bytes = new ASCIIEncoding().GetBytes(str);
         for (int i = 0; i < bytes.Length; i++)
         {
             if (bytes[i] == 63)
-            {
                 tempLen += 3;
-            }
             else
-            {
                 tempLen += 1;
-            }
         }
 
         return tempLen;

@@ -321,6 +321,8 @@ public partial class RobotView : UserControl
                     {
                         SendChatChsRetrunImg(group_id, $"[来自QQ群] {raw_message}");
                     }
+
+                    return;
                 }
 
                 if (raw_message.Equals("#屏幕截图"))
@@ -328,6 +330,8 @@ public partial class RobotView : UserControl
                     PrintAdminLog(user_id, raw_message);
 
                     GetPrintScreen(group_id);
+
+                    return;
                 }
 
                 if (raw_message.Equals("#得分板截图"))
@@ -335,6 +339,8 @@ public partial class RobotView : UserControl
                     PrintAdminLog(user_id, raw_message);
 
                     GetScorePrintScreen(group_id);
+
+                    return;
                 }
             }
         }
@@ -422,7 +428,7 @@ public partial class RobotView : UserControl
             _ = QQAPI.SendGroupMsg(group_id, "正在执行中...");
 
             Memory.SetBF1WindowForeground();
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             if (Memory.GetBF1WindowData(out WindowData windowData))
             {
@@ -454,10 +460,10 @@ public partial class RobotView : UserControl
             _ = QQAPI.SendGroupMsg(group_id, "正在执行中...");
 
             Memory.SetBF1WindowForeground();
-            await Task.Delay(50);
+            await Task.Delay(100);
 
-            Chat.SetInputLanguageENUS();
-            await Task.Delay(50);
+            ChsUtil.SetInputLanguageENUS();
+            await Task.Delay(100);
 
             if (Memory.GetBF1WindowData(out WindowData windowData))
             {
@@ -467,7 +473,7 @@ public partial class RobotView : UserControl
                 Win32.Keybd_Event(WinVK.TAB, Win32.MapVirtualKey(WinVK.TAB, 0), 0, 0);
                 await Task.Delay(2000);
                 graphics.CopyFromScreen(new Point(windowData.Left, windowData.Top), new Point(0, 0), new Size(windowData.Width, windowData.Height));
-                await Task.Delay(50);
+                await Task.Delay(100);
                 Win32.Keybd_Event(WinVK.TAB, Win32.MapVirtualKey(WinVK.TAB, 0), 2, 0);
 
                 var file = $"BF1#{DateTime.Now:yyyyMMdd_HH-mm-ss-ffff}.png";

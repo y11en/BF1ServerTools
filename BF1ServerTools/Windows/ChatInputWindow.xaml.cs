@@ -149,7 +149,7 @@ public partial class ChatInputWindow : Window
                             this.Width = windowData.Width - 20;
                         }
 
-                        Chat.SetInputLanguageZHCN();
+                        ChsUtil.SetInputLanguageZHCN();
                     });
                 }
             }
@@ -177,9 +177,9 @@ public partial class ChatInputWindow : Window
         ToggleChsIME = !ToggleChsIME;
 
         if (ToggleChsIME)
-            Chat.SetInputLanguageZHCN();
+            ChsUtil.SetInputLanguageZHCN();
         else
-            Chat.SetInputLanguageENUS();
+            ChsUtil.SetInputLanguageENUS();
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public partial class ChatInputWindow : Window
 
         TextBox_InputMessage.Clear();
 
-        Chat.SetInputLanguageENUS();
+        ChsUtil.SetInputLanguageENUS();
         Memory.SetBF1WindowForeground();
 
         //////////////////////////////////////////////////////
@@ -216,7 +216,7 @@ public partial class ChatInputWindow : Window
     private void HideWindow()
     {
         TextBox_InputMessage.Clear();
-        Chat.SetInputLanguageENUS();
+        ChsUtil.SetInputLanguageENUS();
         this.Hide();
     }
 }

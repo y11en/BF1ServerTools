@@ -589,4 +589,214 @@ public partial class RuleView : UserControl
 
         NotifierHelper.Show(NotifierType.Success, $"添加玩家 {name} 到黑名单列表成功");
     }
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+    /// <summary>
+    /// 导入白名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ImportCustomWhites_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                Title = "批量导入白名单列表",
+                RestoreDirectory = true,
+                Multiselect = false,
+                Filter = "Txt文件|*.txt"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                ListBox_CustomWhites.Items.Clear();
+                foreach (var item in File.ReadAllLines(fileDialog.FileName))
+                {
+                    if (!string.IsNullOrWhiteSpace(item))
+                        ListBox_CustomWhites.Items.Add(item);
+                }
+
+                NotifierHelper.Show(NotifierType.Success, "批量导入txt文件到白名单列表成功");
+            }
+        }
+        catch (Exception ex)
+        {
+            NotifierHelper.ShowException(ex);
+        }
+    }
+
+    /// <summary>
+    /// 导出白名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ExportCustomWhites_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_CustomWhites.Items.IsEmpty)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "白名单列表为空，导出操作取消");
+            return;
+        }
+
+        try
+        {
+            var fileDialog = new SaveFileDialog
+            {
+                Title = "批量导出白名单列表",
+                RestoreDirectory = true,
+                Filter = "Txt文件|*.txt"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(fileDialog.FileName, string.Join(Environment.NewLine, ListBox_CustomWhites.Items.Cast<string>()));
+
+                NotifierHelper.Show(NotifierType.Success, "批量导出白名单列表到txt文件成功");
+            }
+        }
+        catch (Exception ex)
+        {
+            NotifierHelper.ShowException(ex);
+        }
+    }
+
+    /// <summary>
+    /// 白名单列表去重
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_DistinctCustomWhites_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_CustomWhites.Items.IsEmpty)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "白名单列表为空，去重操作取消");
+            return;
+        }
+
+        List<string> tempStr = new();
+        foreach (string item in ListBox_CustomWhites.Items)
+            tempStr.Add(item);
+        ListBox_CustomWhites.Items.Clear();
+        foreach (var item in tempStr.Distinct().ToList())
+            ListBox_CustomWhites.Items.Add(item);
+
+        NotifierHelper.Show(NotifierType.Success, "白名单列表去重成功");
+    }
+
+    /// <summary>
+    /// 清空白名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ClearCustomWhites_Click(object sender, RoutedEventArgs e)
+    {
+        ListBox_CustomWhites.Items.Clear();
+        NotifierHelper.Show(NotifierType.Success, "清空白名单列表成功");
+    }
+
+    /// <summary>
+    /// 导入黑名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ImportCustomBlacks_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                Title = "批量导入黑名单列表",
+                RestoreDirectory = true,
+                Multiselect = false,
+                Filter = "Txt文件|*.txt"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                ListBox_CustomBlacks.Items.Clear();
+                foreach (var item in File.ReadAllLines(fileDialog.FileName))
+                {
+                    if (!string.IsNullOrWhiteSpace(item))
+                        ListBox_CustomBlacks.Items.Add(item);
+                }
+
+                NotifierHelper.Show(NotifierType.Success, "批量导入txt文件到黑名单列表成功");
+            }
+        }
+        catch (Exception ex)
+        {
+            NotifierHelper.ShowException(ex);
+        }
+    }
+
+    /// <summary>
+    /// 导出黑名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ExportCustomBlacks_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_CustomBlacks.Items.IsEmpty)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "黑名单列表为空，导出操作取消");
+            return;
+        }
+
+        try
+        {
+            var fileDialog = new SaveFileDialog
+            {
+                Title = "批量导出黑名单列表",
+                RestoreDirectory = true,
+                Filter = "Txt文件|*.txt"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(fileDialog.FileName, string.Join(Environment.NewLine, ListBox_CustomBlacks.Items.Cast<string>()));
+
+                NotifierHelper.Show(NotifierType.Success, "批量导出黑名单列表到txt文件成功");
+            }
+        }
+        catch (Exception ex)
+        {
+            NotifierHelper.ShowException(ex);
+        }
+    }
+
+    /// <summary>
+    /// 黑名单列表去重
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_DistinctCustomBlacks_Click(object sender, RoutedEventArgs e)
+    {
+        if (ListBox_CustomBlacks.Items.IsEmpty)
+        {
+            NotifierHelper.Show(NotifierType.Warning, "黑名单列表为空，去重操作取消");
+            return;
+        }
+
+        List<string> tempStr = new();
+        foreach (string item in ListBox_CustomBlacks.Items)
+            tempStr.Add(item);
+        ListBox_CustomBlacks.Items.Clear();
+        foreach (var item in tempStr.Distinct().ToList())
+            ListBox_CustomBlacks.Items.Add(item);
+
+        NotifierHelper.Show(NotifierType.Success, "黑名单列表去重成功");
+    }
+
+    /// <summary>
+    /// 清空黑名单列表
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void MenuItem_ClearCustomBlacks_Click(object sender, RoutedEventArgs e)
+    {
+        ListBox_CustomBlacks.Items.Clear();
+        NotifierHelper.Show(NotifierType.Success, "清空黑名单列表成功");
+    }
 }

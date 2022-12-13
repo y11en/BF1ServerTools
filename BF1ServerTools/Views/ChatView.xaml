@@ -27,7 +27,7 @@
                 IsChecked="False" />
             <!--  ################################  -->
             <TextBlock Style="{StaticResource TextBlockStyle_Hint}">
-                说明：这个一般是自己单独在游戏中使用中文聊天，不要和定时发送文本及其他同时开启，以免发生冲突
+                说明：这个一般是自己单独在游戏中使用中文聊天，建议不要和定时发送文本及其他类似程序同时开启，以免发生冲突
             </TextBlock>
 
             <ui:UiLabelIcon Content="中文聊天" />
@@ -247,7 +247,7 @@
                         x:Name="ToggleButton_ActiveChangeTeamNotice"
                         Margin="5"
                         Click="ToggleButton_ActiveChangeTeamNotice_Click"
-                        Content="激活换边通知（Beta）"
+                        Content="激活换边通知"
                         FontSize="14"
                         FontWeight="Bold" />
                 </StackPanel>

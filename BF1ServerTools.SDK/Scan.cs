@@ -4,18 +4,11 @@ namespace BF1ServerTools.SDK;
 
 public static class Scan
 {
-    /// <summary>
-    /// 线程锁
-    /// </summary>
-    private static readonly object Obj = new();
-
     private struct CanReadAddress
     {
         public long Address;
         public int Size;
     }
-
-    private static List<CanReadAddress> _canReads = new();
 
     /// <summary>
     /// X-GatewaySession: （16进制字符串）
@@ -30,50 +23,47 @@ public static class Scan
     {
         return await Task.Run(() =>
         {
-            lock (Obj)
+            List<CanReadAddress> canReadAddresses = new();
+
+            var mbi = default(MEMORY_BASIC_INFORMATION64);
+            var size = Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION64));
+
+            long baseAddress = 0;
+            long maxAddress = long.MaxValue;
+
+            while (baseAddress >= 0 && baseAddress <= maxAddress && mbi.RegionSize >= 0)
             {
-                _canReads.Clear();
+                // 扫描内存信息
+                if (Win32.VirtualQueryEx(Memory.Bf1ProHandle, new IntPtr(baseAddress), out mbi, size) == 0)
+                    break;
 
-                var mbi = default(MEMORY_BASIC_INFORMATION64);
-                var size = Marshal.SizeOf(typeof(MEMORY_BASIC_INFORMATION64));
-
-                long baseAddress = 0;
-                long maxAddress = long.MaxValue;
-
-                while (baseAddress >= 0 && baseAddress <= maxAddress && mbi.RegionSize >= 0)
+                // 如果是已物理分配 并且是 可读写内存
+                if (mbi.State == (int)AllocationType.Commit && mbi.Protect == (int)AllocationProtect.PAGE_READWRITE)
                 {
-                    // 扫描内存信息
-                    if (Win32.VirtualQueryEx(Memory.Bf1ProHandle, new IntPtr(baseAddress), out mbi, size) == 0)
-                        break;
-
-                    // 如果是已物理分配 并且是 可读写内存
-                    if (mbi.State == (int)AllocationType.Commit && mbi.Protect == (int)AllocationProtect.PAGE_READWRITE)
+                    canReadAddresses.Add(new CanReadAddress()
                     {
-                        _canReads.Add(new CanReadAddress()
-                        {
-                            Address = baseAddress,
-                            Size = (int)mbi.RegionSize
-                        });
-                    }
-
-                    // 设置基地址偏移
-                    baseAddress += (long)mbi.RegionSize;
+                        Address = baseAddress,
+                        Size = (int)mbi.RegionSize
+                    });
                 }
 
-                foreach (var item in _canReads)
-                {
-                    var addr = FindPattern(SessionIdMask, item.Address, item.Size);
-                    if (addr != 0)
-                    {
-                        var str = Memory.ReadString(addr, 54);
-                        str = str.Replace("X-GatewaySession: ", "").Trim();
-                        if (IsGuidByReg(str))
-                            return str;
-                    }
-                }
-
-                return string.Empty;
+                // 设置基地址偏移
+                baseAddress += (long)mbi.RegionSize;
             }
+
+            foreach (var item in canReadAddresses)
+            {
+                var addr = FindPattern(SessionIdMask, item.Address, item.Size);
+                if (addr != 0)
+                {
+                    var str = Memory.ReadString(addr, 54);
+                    str = str.Replace("X-GatewaySession: ", "").Trim();
+                    if (IsGuidByReg(str))
+                        return str;
+                }
+            }
+
+            return string.Empty;
         });
     }
 

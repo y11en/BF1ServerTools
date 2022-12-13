@@ -693,10 +693,8 @@ public partial class MonitView : UserControl
         if (Globals.AutoKickBreakRulePlayer)
         {
             // 遍历违规玩家列表
-            for (int i = 0; i < Globals.BreakRuleInfo_PlayerList.Count; i++)
+            foreach (var item in Globals.BreakRuleInfo_PlayerList)
             {
-                var item = Globals.BreakRuleInfo_PlayerList[i];
-
                 // 跳过管理员玩家
                 if (item.Admin)
                     continue;

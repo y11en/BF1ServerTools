@@ -244,7 +244,7 @@ public partial class ChatView : UserControl
     /// <param name="e"></param>
     private void Button_SetInputLanguageENUS_Click(object sender, RoutedEventArgs e)
     {
-        Chat.SetInputLanguageENUS();
+        ChsUtil.SetInputLanguageENUS();
         NotifierHelper.Show(NotifierType.Notification, "切换输入法为英文状态成功");
     }
 
@@ -380,7 +380,7 @@ public partial class ChatView : UserControl
             return;
 
         // 切换输入法到英文状态
-        Chat.SetInputLanguageENUS();
+        ChsUtil.SetInputLanguageENUS();
         Thread.Sleep(ChatModel.KeyPressDelay);
 
         // 将战地1窗口置于前面
